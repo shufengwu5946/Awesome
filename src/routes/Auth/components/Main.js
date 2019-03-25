@@ -1,8 +1,14 @@
 import React from "react";
 import { StyleSheet, Text, View, StatusBar } from "react-native";
 import { scaleSize } from "../../../utils/ScreenUtil";
+import User from '../../User/components/User';
 
 export default class Main extends React.Component {
+
+  static navigationOptions = {
+    title: '我的',
+  };
+
   constructor(props) {
     super(props);
   }
@@ -10,7 +16,7 @@ export default class Main extends React.Component {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
-        <Text style={styles.content}>登录成功</Text>
+        <User/>
       </View>
     );
   }
@@ -18,7 +24,8 @@ export default class Main extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: "white"
   },
   content: {
     fontSize: scaleSize(34)

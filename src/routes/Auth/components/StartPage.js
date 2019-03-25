@@ -13,11 +13,8 @@ export default class StartPage extends React.Component {
     AsyncStorage.getItem(LOGIN_DATA)
       .then(value => {
         if (value) {
-          console.log("Main");
-          
           this.props.navigation.navigate("Main");
         } else {
-          console.log("Login");
           this.props.navigation.navigate("Login");
         }
       })

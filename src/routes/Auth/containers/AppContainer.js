@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   createSwitchNavigator,
   createBottomTabNavigator,
@@ -6,28 +6,45 @@ import {
 } from "react-navigation";
 import Login from "../components/Login";
 import Main from "../components/Main";
+import Trends from "../components/Trends";
 import StartPage from "../components/StartPage";
-// import Icon from 'react-native-vector-icons/AntDesign';
+import Icon from "react-native-vector-icons/AntDesign";
+import { scaleSize } from "../../../utils/ScreenUtil";
 
 const MainStack = createBottomTabNavigator(
-  { Main: Main },
-  // {
-  //   defaultNavigationOptions: ({ navigation }) => ({
-  //     tabBarIcon: ({ focused, horizontal, tintColor }) => {
-  //       const { routeName } = navigation.state;
-  //       let IconComponent = Icon;
-  //       let iconName;
-  //       if (routeName === "Main") {
-  //         iconName = `search`;
-  //       }
-  //       return <IconComponent name={iconName} size={25} color={tintColor} />;
-  //     }
-  //   }),
-  //   tabBarOptions: {
-  //     activeTintColor: "dark",
-  //     inactiveTintColor: "gray"
-  //   }
-  // }
+  {
+    Trends: Trends,
+    Main: Main,
+  },
+  {
+    defaultNavigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused, horizontal, tintColor }) => {
+        const { routeName } = navigation.state;
+        let IconComponent = Icon;
+        let iconName;
+        if (routeName === "Main") {
+          iconName = "user";
+        }else if(routeName === "Trends"){
+          iconName = "home";
+        }
+        return (
+          <IconComponent
+            name={iconName}
+            size={scaleSize(46)}
+            color={focused ? "green" : "gray"}
+          />
+        );
+      }
+    }),
+    tabBarOptions: {
+      style: { height: scaleSize(100), paddingBottom: scaleSize(10) },
+      activeTintColor: "green",
+      inactiveTintColor: "gray",
+      labelStyle: {
+        fontSize: scaleSize(22)
+      }
+    }
+  }
 );
 
 export default createAppContainer(
