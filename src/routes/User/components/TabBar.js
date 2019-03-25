@@ -1,6 +1,14 @@
 import React, { Component } from "react";
-import { ScrollView, Image, Text, View, StyleSheet,Alert,TouchableOpacity } from "react-native";
-import { scaleSize } from "../../../utils/ScreenUtil";
+import {
+  ScrollView,
+  Image,
+  Text,
+  View,
+  StyleSheet,
+  Alert,
+  TouchableOpacity
+} from "react-native";
+import { scaleSize, screenH } from "../../../utils/ScreenUtil";
 import { retrieveData } from "../../../utils/AsyncStorageUtils";
 import { LOGIN_DATA } from "../../../constants/asyncStorageKey";
 import AsyncStorage from "@react-native-community/async-storage";
@@ -11,10 +19,10 @@ export default class TabBar extends Component {
     this.state = { checkIndex: 0 };
   }
 
-  handleClick(index,e){
-      console.log(index);
-      
-    this.setState({ checkIndex: index })
+  handleClick(index, e) {
+    console.log(index);
+    console.log(screenH);
+    this.setState({ checkIndex: index });
   }
 
   render() {
@@ -26,7 +34,11 @@ export default class TabBar extends Component {
           const checkFontColor =
             index === this.state.checkIndex ? "green" : "gray";
           return (
-            <TouchableOpacity key={index} style={styles.item} onPress={this.handleClick.bind(this,index)}>
+            <TouchableOpacity
+              key={index}
+              style={styles.item}
+              onPress={this.handleClick.bind(this, index)}
+            >
               <View style={styles.itemTextView}>
                 <Text style={{ ...styles.itemText, color: checkFontColor }}>
                   {value}
@@ -38,9 +50,11 @@ export default class TabBar extends Component {
                   ...styles.itemUnderLine
                 }}
               />
+              <View style={styles.underLine}/>
             </TouchableOpacity>
           );
         })}
+        
       </View>
     );
   }
@@ -60,17 +74,21 @@ const styles = StyleSheet.create({
   itemTextView: {
     flex: 1,
     color: "gray",
-    fontSize: scaleSize(50),
     justifyContent: "center",
     alignItems: "center",
     height: scaleSize(80)
   },
   itemText: {
     color: "gray",
-    fontSize: scaleSize(40)
+    fontSize: scaleSize(32)
   },
   itemUnderLine: {
     flex: 1,
-    height: scaleSize(5)
+    height: scaleSize(4)
+  },
+  underLine: {
+    flex: 1,
+    height: scaleSize(1),
+    backgroundColor:"gray"
   }
 });
