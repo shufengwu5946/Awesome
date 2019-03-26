@@ -1,11 +1,12 @@
 import { combineReducers } from "redux";
-import { userName, password, loading, loginSuccStatus } from "./auth";
+import { userName, password, loading, loginSuccStatus, screenHeight } from "./auth";
 
 const reducer = combineReducers({
   userName,
   password,
   loading,
-  loginSuccStatus
+  loginSuccStatus,
+  screenHeight
 });
 
 export default reducer;

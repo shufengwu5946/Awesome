@@ -17,18 +17,15 @@ import { retrieveData } from "../../../utils/AsyncStorageUtils";
 import { LOGIN_DATA } from "../../../constants/asyncStorageKey";
 import AsyncStorage from "@react-native-community/async-storage";
 const { StatusBarManager } = NativeModules;
+import { connect } from "react-redux";
 
-export default class ViewPager extends Component {
+class ViewPager extends Component {
   constructor(props) {
     super(props);
     this.state = { checkIndex: 1 };
   }
 
-  componentWillMount() {
-    DeviceEventEmitter.addListener("keyboardWillShow", e => {
-      Alert.alert("hahaha");
-    });
-  }
+  componentWillMount() {}
 
   onPageSelected = event => {
     console.log(event.nativeEvent);
@@ -38,9 +35,15 @@ export default class ViewPager extends Component {
   };
 
   render() {
+    console.log(this.props.screenHeight);
+    
     return (
       <ViewPagerAndroid
-        style={styles.viewPager}
+        style={{
+          height:
+            this.props.screenHeight - scaleSize(180) - StatusBarManager.HEIGHT,
+          ...styles.viewPager
+        }}
         initialPage={this.state.checkIndex}
       >
         <View style={styles.pageStyle} key="1">
@@ -70,9 +73,7 @@ export default class ViewPager extends Component {
 
 const styles = StyleSheet.create({
   viewPager: {
-    flex: 1,
-    height:
-      Dimensions.get("window").height - scaleSize(180) - StatusBarManager.HEIGHT
+    flex: 1
   },
   pageStyle: {
     flex: 1
@@ -81,3 +82,9 @@ const styles = StyleSheet.create({
     height: scaleSize(50)
   }
 });
+
+const mapStateToProps = state => ({
+  screenHeight: state.screenHeight
+});
+
+export default connect(mapStateToProps)(ViewPager);

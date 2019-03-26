@@ -14,7 +14,7 @@ import { scaleSize } from "../../../utils/ScreenUtil";
 const MainStack = createBottomTabNavigator(
   {
     Trends: Trends,
-    Main: Main,
+    User: Main,
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
@@ -22,7 +22,7 @@ const MainStack = createBottomTabNavigator(
         const { routeName } = navigation.state;
         let IconComponent = Icon;
         let iconName;
-        if (routeName === "Main") {
+        if (routeName === "User") {
           iconName = "user";
         }else if(routeName === "Trends"){
           iconName = "home";

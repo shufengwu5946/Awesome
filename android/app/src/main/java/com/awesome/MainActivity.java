@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
+import com.facebook.react.ReactApplication;
+import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactRootView;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactContext;
@@ -15,10 +17,11 @@ import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
 
-public class MainActivity extends ReactActivity implements ViewTreeObserver.OnGlobalLayoutListener{
+public class MainActivity extends ReactActivity implements ViewTreeObserver.OnGlobalLayoutListener {
 
     FrameLayout content;
     private boolean mLayoutComplete = false;
+    int rootViewHeight = 0;
 
     /**
      * Returns the name of the main component registered from JavaScript.
@@ -36,7 +39,7 @@ public class MainActivity extends ReactActivity implements ViewTreeObserver.OnGl
             protected ReactRootView createRootView() {
                 return new RNGestureHandlerEnabledRootView(MainActivity.this);
             }
-        };  
+        };
     }
 
     @Override
@@ -51,12 +54,22 @@ public class MainActivity extends ReactActivity implements ViewTreeObserver.OnGl
     public void onGlobalLayout() {
         if (!mLayoutComplete)
             return;
-        onNavigationBarStatusChanged();
+
+        int viewHeight = content.getHeight();
+        if (rootViewHeight != viewHeight) {
+            rootViewHeight = viewHeight;
+            onNavigationBarStatusChanged();
+        }
+
     }
 
+
     private void onNavigationBarStatusChanged() {
-        Toast.makeText(this, "daohang", Toast.LENGTH_SHORT).show();
-//        sendEvent(get, "keyboardWillShow", params);
+//        Toast.makeText(this, "daohang", Toast.LENGTH_SHORT).show();
+        if (NaviBar.myContext != null) {
+            new NaviBar().send();
+        }
+
     }
 
     @Override
@@ -64,16 +77,5 @@ public class MainActivity extends ReactActivity implements ViewTreeObserver.OnGl
         super.onDestroy();
         content.getViewTreeObserver().removeOnGlobalLayoutListener(this);
     }
-
-//    private void sendEvent(ReactContext reactContext,
-//                           String eventName,
-//                           @Nullable WritableMap params) {
-//        reactContext
-//                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-//                .emit(eventName, params);
-//    }
-//
-//    WritableMap params = Arguments.createMap();
-
 
 }

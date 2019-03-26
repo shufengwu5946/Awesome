@@ -3,7 +3,8 @@ import {
   LOGIN_FAIL,
   LOGIN_START,
   SET_USER_NAME,
-  SET_PASSWORD
+  SET_PASSWORD,
+  SET_SCREEN_HEIGHT
 } from "../constants/actions";
 import { LOGIN_URL } from "../constants/fetch";
 import { ToastAndroid } from "react-native";
@@ -38,6 +39,11 @@ export const loginStart = (userName, password) => ({
   type: LOGIN_START,
   userName,
   password
+});
+
+export const setScreenHeight = (screenHeight) => ({
+  type: SET_SCREEN_HEIGHT,
+  screenHeight
 });
 
 export const login = () => {
