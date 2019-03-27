@@ -12,9 +12,11 @@ import {
 } from "react-native";
 import { scaleSize } from "../../../utils/ScreenUtil";
 import UserBar from "./UserBar";
-import TabBar from "./TabBar";
-import ViewPager from "./ViewPager";
 import { Tabs } from "@ant-design/react-native";
+import UserTabView from "./tabview/UserTabView";
+import FlowPage from "./tabview/FlowPage";
+import JestPage from "./tabview/JestPage";
+import ReactPage from "./tabview/ReactPage";
 
 export default class User extends Component {
   constructor(props) {
@@ -28,40 +30,23 @@ export default class User extends Component {
   }
 
   componentDidUpdate() {
-    Alert.alert("更新");
+    // Alert.alert("更新");
   }
 
   render() {
-    const tabs = [
-      { title: "First Tab" },
-      { title: "Second Tab" },
-      { title: "Third Tab" }
+    const routes = [
+      { key: "stars", title: "星标" },
+      { key: "second", title: "Second" },
+      { key: "third", title: "Third" }
     ];
 
+    const scenes = { stars: FlowPage, second: JestPage, third: ReactPage };
+
     return (
-      <ScrollView stickyHeaderIndices={[1]}>
+      <View style={styles.container}>
         <UserBar />
-        <TabBar items={["hehe", "haha"]} />
-        <ViewPager />
-        {/* <View style={{ flex: 1 }}>
-          <Tabs tabs={tabs} onChange={(tab, index) => this.handleChange(index)} page = {this.state.page}>
-            <View style={styles.tab} />
-            <View style={styles.tab} />
-            <View style={styles.tab} />
-          </Tabs>
-        </View> */}
-        {/* <ViewPagerAndroid style={styles.viewPager} initialPage={0}>
-          <View style={styles.pageStyle} key="1">
-            <Text>First page</Text>
-          </View>
-          <View style={styles.pageStyle} key="2">
-            <Text>Second page</Text>
-          </View>
-          <View style={styles.pageStyle} key="3">
-            <Text>Third page</Text>
-          </View>
-        </ViewPagerAndroid> */}
-      </ScrollView>
+        <UserTabView routes={routes} scenes={scenes} />
+      </View>
     );
   }
 }

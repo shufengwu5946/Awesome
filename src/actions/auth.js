@@ -8,7 +8,7 @@ import {
 } from "../constants/actions";
 import { LOGIN_URL } from "../constants/fetch";
 import { ToastAndroid } from "react-native";
-import fetchLogin from "../fetch/auth";
+import { fetchLogin } from "../fetch/auth";
 import { scaleSize } from "../utils/ScreenUtil";
 import { LOGIN_DATA } from "../constants/asyncStorageKey";
 import { storeData } from "../utils/AsyncStorageUtils";
@@ -27,10 +27,10 @@ export const loginSuccess = (userName, password, loginSuccStatus) => ({
   type: LOGIN_SUCCESS,
   userName,
   password,
-  loginSuccStatus,
+  loginSuccStatus
 });
 
-export const loginFail = (loginSuccStatus) => ({
+export const loginFail = loginSuccStatus => ({
   type: LOGIN_FAIL,
   loginSuccStatus
 });
@@ -39,11 +39,6 @@ export const loginStart = (userName, password) => ({
   type: LOGIN_START,
   userName,
   password
-});
-
-export const setScreenHeight = (screenHeight) => ({
-  type: SET_SCREEN_HEIGHT,
-  screenHeight
 });
 
 export const login = () => {

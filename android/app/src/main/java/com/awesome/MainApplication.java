@@ -30,8 +30,7 @@ public class MainApplication extends Application implements ReactApplication {
                     new ReanimatedPackage(),
                     new VectorIconsPackage(),
                     new AsyncStoragePackage(),
-                    new RNGestureHandlerPackage(),
-                    new NaviBarPackage()
+                    new RNGestureHandlerPackage()
             );
         }
 

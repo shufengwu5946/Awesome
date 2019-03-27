@@ -12,6 +12,8 @@ import AppContainer from "./src/routes/Auth/index";
 import { connect } from "react-redux";
 import { setScreenHeight as setScreenH } from "./src/actions/auth";
 import { Dimensions } from "react-native";
+import ExtraDimensions from "react-native-extra-dimensions-android";
+import { screenHeight } from "./src/reducers/auth";
 
 class App extends Component {
   constructor(props) {
@@ -21,15 +23,17 @@ class App extends Component {
     return (
       <AppContainer
         onNavigationStateChange={(prevNav, nav, action) => {
-          console.log("prevNav=", prevNav);
+          {
+            /* console.log("prevNav=", prevNav);
           console.log("nav=", nav);
-          console.log("action=", action);
+          console.log("action=", action); */
+          }
           if (action.routeName === "User") {
-            DeviceEventEmitter.addListener("WillShow", e => {
-              console.log("WillShow");
-
-              const h = Dimensions.get("window").height;
-              console.log("WillShow " + h);
+            DeviceEventEmitter.addListener("WillShow", isAllScreen => {
+              let h = isAllScreen
+                ? ExtraDimensions.get('REAL_WINDOW_HEIGHT')
+                : ExtraDimensions.get('REAL_WINDOW_HEIGHT') -
+                  ExtraDimensions.get('SOFT_MENU_BAR_HEIGHT');
               this.props.setScreenHeight(h);
             });
           } else {

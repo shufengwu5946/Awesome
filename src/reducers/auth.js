@@ -7,7 +7,7 @@ import {
   SET_SCREEN_HEIGHT
 } from "../constants/actions";
 
-import { Dimensions } from "react-native";
+import ExtraDimensions from "react-native-extra-dimensions-android";
 
 export const loading = (state = false, action) => {
   switch (action.type) {
@@ -58,18 +58,6 @@ export const loginSuccStatus = (state = false, action) => {
       return true;
     case LOGIN_FAIL:
       return false;
-    default:
-      return state;
-  }
-};
-
-export const screenHeight = (
-  state = Dimensions.get("window").height,
-  action
-) => {
-  switch (action.type) {
-    case SET_SCREEN_HEIGHT:
-      return action.screenHeight;
     default:
       return state;
   }

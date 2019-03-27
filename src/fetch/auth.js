@@ -22,8 +22,29 @@ function handleResponse(response) {
   throw new Error(`Sorry, content-type ${contentType} not supported`);
 }
 
-export default function fetchLogin(url, userName, password, func, funcError) {
+export function fetchLogin(url, userName, password, func, funcError) {
   fetch(url, {
+    method: "get",
+    headers: {
+      Authorization: `Basic ${base64.encode(`${userName}:${password}`)}`
+    }
+  })
+    .then(handleResponse)
+    .then(data => {
+      func(data);
+    })
+    .catch(error => {
+      funcError(error);
+    });
+}
+
+export function fetchGet(url, userName, password, params ,func, funcError) {
+  let paramArr = [];
+  Object.keys(params).forEach(function (key) {
+    paramArr.push(`${key}=${paramObj[key]}`);
+  });
+
+  fetch(`${url}?${paramArr.join('&')}`, {
     method: "get",
     headers: {
       Authorization: `Basic ${base64.encode(`${userName}:${password}`)}`

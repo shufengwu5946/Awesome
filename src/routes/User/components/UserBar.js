@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { ScrollView, Image, Text, View, StyleSheet } from "react-native";
 import { scaleSize } from "../../../utils/ScreenUtil";
-import { retrieveData } from "../../../utils/AsyncStorageUtils";
 import { LOGIN_DATA } from "../../../constants/asyncStorageKey";
 import AsyncStorage from "@react-native-community/async-storage";
 
@@ -15,7 +14,7 @@ export default class UserBar extends Component {
     AsyncStorage.getItem(LOGIN_DATA)
       .then(value => {
         if (value) {
-          console.log(JSON.parse(value));
+          // console.log(JSON.parse(value));
           this.setState({
             avatarUrl: JSON.parse(value).avatar_url,
             name: JSON.parse(value).login,
@@ -46,30 +45,30 @@ export default class UserBar extends Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#DDDDDD",
-    height: scaleSize(300),
+    height: scaleSize(200),
     flexDirection: "row",
     alignItems: "center",
-    paddingLeft: scaleSize(40)
+    paddingLeft: scaleSize(20)
   },
   avatar: {
-    width: scaleSize(220),
-    height: scaleSize(220),
+    width: scaleSize(160),
+    height: scaleSize(160),
     backgroundColor: "#FFFFFF"
   },
   userInfo: {
     flex: 1,
-    height: scaleSize(220),
-    paddingLeft: scaleSize(40),
-    paddingRight: scaleSize(40),
+    height: scaleSize(160),
+    paddingLeft: scaleSize(20),
+    paddingRight: scaleSize(20),
     flexDirection: "column",
     justifyContent: "space-evenly"
   },
   userName: {
-    fontSize: scaleSize(50),
+    fontSize: scaleSize(40),
     color: "#333333"
   },
   userJoinDate: {
-    fontSize: scaleSize(30),
+    fontSize: scaleSize(26),
     color: "#333333"
   }
 });
