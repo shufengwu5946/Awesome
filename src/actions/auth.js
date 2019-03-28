@@ -8,7 +8,7 @@ import {
 } from "../constants/actions";
 import { LOGIN_URL } from "../constants/fetch";
 import { ToastAndroid } from "react-native";
-import { fetchLogin } from "../fetch/auth";
+import { fetchLogin } from "../fetch/index";
 import { scaleSize } from "../utils/ScreenUtil";
 import { LOGIN_DATA } from "../constants/asyncStorageKey";
 import { storeData } from "../utils/AsyncStorageUtils";
@@ -79,6 +79,7 @@ export const login = () => {
           scaleSize(150)
         );
         dispatch(loginSuccess(getState().userName, getState().password));
+        storeData(LOGIN_DATA, JSON.stringify(data));
         storeData(LOGIN_DATA, JSON.stringify(data));
       },
       () => {

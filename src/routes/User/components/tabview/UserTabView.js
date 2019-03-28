@@ -1,11 +1,7 @@
 import * as React from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
-import FlowPage from "./FlowPage";
-import JestPage from "./JestPage";
-import ReactPage from "./ReactPage";
 import { scaleSize } from "../../../../utils/ScreenUtil";
-import EmptyPage from "./EmptyPage";
 
 export default class UserTabView extends React.Component {
   state = {

@@ -10,13 +10,12 @@ import {
   ViewPagerAndroid,
   Alert
 } from "react-native";
-import { scaleSize } from "../../../utils/ScreenUtil";
 import UserBar from "./UserBar";
-import { Tabs } from "@ant-design/react-native";
 import UserTabView from "./tabview/UserTabView";
-import FlowPage from "./tabview/FlowPage";
+import StarPage from "./tabview/StarPage";
 import JestPage from "./tabview/JestPage";
 import ReactPage from "./tabview/ReactPage";
+import RepoListItem from "../../../components/RepoListItem";
 
 export default class User extends Component {
   constructor(props) {
@@ -25,26 +24,32 @@ export default class User extends Component {
   }
 
   handleChange(index, e) {
-    // Alert.alert("handleChange " + index);
     this.setState({ page: index });
   }
 
-  componentDidUpdate() {
-    // Alert.alert("更新");
-  }
+  componentDidUpdate() {}
 
   render() {
     const routes = [
-      { key: "stars", title: "星标" },
+      { key: "stars", title: "star" },
       { key: "second", title: "Second" },
       { key: "third", title: "Third" }
     ];
 
-    const scenes = { stars: FlowPage, second: JestPage, third: ReactPage };
+    const scenes = { stars: StarPage, second: JestPage, third: ReactPage };
 
     return (
       <View style={styles.container}>
         <UserBar />
+        {/* <RepoListItem
+          imageUrl="https://avatars0.githubusercontent.com/u/16875258?s=460&v=4"
+          title="React-Native-Send-Event-from-Native-Module"
+          language = "Objective-C"
+          description = "JavaScript端接收来自RN原生模块发送的事件，实现了前端与原生模块之间的通信"
+          author = "chaohuangtianjie994"
+          starNumber = {11}
+          forkNumber={44}
+        /> */}
         <UserTabView routes={routes} scenes={scenes} />
       </View>
     );

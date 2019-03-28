@@ -41,9 +41,8 @@ export function fetchLogin(url, userName, password, func, funcError) {
 export function fetchGet(url, userName, password, params ,func, funcError) {
   let paramArr = [];
   Object.keys(params).forEach(function (key) {
-    paramArr.push(`${key}=${paramObj[key]}`);
+    paramArr.push(`${key}=${params[key]}`);
   });
-
   fetch(`${url}?${paramArr.join('&')}`, {
     method: "get",
     headers: {
