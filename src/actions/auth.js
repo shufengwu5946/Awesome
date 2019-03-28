@@ -7,11 +7,10 @@ import {
   SET_SCREEN_HEIGHT
 } from "../constants/actions";
 import { LOGIN_URL } from "../constants/fetch";
-import { ToastAndroid } from "react-native";
 import { fetchLogin } from "../fetch/index";
-import { scaleSize } from "../utils/ScreenUtil";
-import { LOGIN_DATA } from "../constants/asyncStorageKey";
+import { LOGIN_DATA, PASSWORD } from "../constants/asyncStorageKey";
 import { storeData } from "../utils/AsyncStorageUtils";
+import toast from "../utils/ToastUtils";
 
 export const setUserName = userName => ({
   type: SET_USER_NAME,
@@ -44,23 +43,11 @@ export const loginStart = (userName, password) => ({
 export const login = () => {
   const func = (dispatch, getState) => {
     if (getState().userName.length == 0) {
-      ToastAndroid.showWithGravityAndOffset(
-        "用户名不能为空！",
-        ToastAndroid.LONG,
-        ToastAndroid.BOTTOM,
-        0,
-        scaleSize(150)
-      );
+      toast("用户名不能为空！");
       return;
     }
     if (getState().password.length === 0) {
-      ToastAndroid.showWithGravityAndOffset(
-        "密码不能为空！",
-        ToastAndroid.LONG,
-        ToastAndroid.BOTTOM,
-        0,
-        scaleSize(150)
-      );
+      toast("密码不能为空！");
       return;
     }
     dispatch(loginStart(getState().userName, getState().password));
@@ -69,27 +56,13 @@ export const login = () => {
       getState().userName,
       getState().password,
       data => {
-        console.log(data);
-
-        ToastAndroid.showWithGravityAndOffset(
-          "登录成功！",
-          ToastAndroid.LONG,
-          ToastAndroid.BOTTOM,
-          0,
-          scaleSize(150)
-        );
+        toast("登录成功！");
         dispatch(loginSuccess(getState().userName, getState().password));
         storeData(LOGIN_DATA, JSON.stringify(data));
-        storeData(LOGIN_DATA, JSON.stringify(data));
+        storeData(PASSWORD, getState().password);
       },
       () => {
-        ToastAndroid.showWithGravityAndOffset(
-          "登录失败！",
-          ToastAndroid.LONG,
-          ToastAndroid.BOTTOM,
-          0,
-          scaleSize(150)
-        );
+        toast("登录失败！");
         dispatch(loginFail());
       }
     );

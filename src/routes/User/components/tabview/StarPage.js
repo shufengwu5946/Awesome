@@ -6,67 +6,42 @@ import {
   View,
   StyleSheet,
   FlatList,
-  Alert
+  Alert,
+  ToastAndroid
 } from "react-native";
 import EmptyPage from "./EmptyPage";
 import { fetchGet } from "../../../../fetch/index";
 import { STARRED_URL } from "../../../../constants/fetch";
 import { connect } from "react-redux";
 import RepoListItem from "../../../../components/RepoListItem";
+import { PASSWORD, LOGIN_DATA } from "../../../../constants/asyncStorageKey";
+import AsyncStorage from "@react-native-community/async-storage";
+import toast from "../../../../utils/ToastUtils";
+import { scaleSize } from "../../../../utils/ScreenUtil";
 
 class StarPage extends Component {
   constructor(props) {
     super(props);
     const data = [];
-    this.state = { data: data, refreshing: false, page: 1 };
+    this.state = { data: data, refreshing: true, page: 1 };
   }
 
   componentDidMount() {
-    this.getStarredList(true);
+    this.setState({ page: 1, refreshing: true }, () => {
+      this.getStarredList(true);
+    });
   }
 
   handleRefresh() {
-    this.getStarredList(true);
+    this.setState({ page: 1, refreshing: true }, () => {
+      this.getStarredList(true);
+    });
   }
 
-  getStarredList(isRefresh) {
-    AsyncStorage.getItem(LOGIN_DATA)
-      .then(value => {
-        if (value) {
-          // console.log(JSON.parse(value));
-          this.setState({
-            avatarUrl: JSON.parse(value).avatar_url,
-            name: JSON.parse(value).login,
-            joinDate: JSON.parse(value).created_at
-          });
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    this.setState({ refreshing: true });
-    fetchGet(
-      STARRED_URL,
-      this.props.userName,
-      this.props.password,
-      { page: this.state.page },
-      data => {
-        if (isRefresh) {
-          this.setState({ data: data, refreshing: false });
-        } else {
-          this.setState({
-            data: [...data, ...this.props.data],
-            refreshing: false
-          });
-        }
-      },
-      error => {
-        this.setState({ refreshing: false });
-        console.log(error);
-
-        // Alert.alert(error);
-      }
-    );
+  handleEndReached() {
+    this.setState({ page: this.state.page + 1, refreshing: true }, () => {
+      this.getStarredList(false);
+    });
   }
 
   render() {
@@ -75,13 +50,69 @@ class StarPage extends Component {
         <FlatList
           showsVerticalScrollIndicator={false}
           data={this.state.data}
-          renderItem={({ item }) => <RepoListItem title={item.name} />}
+          renderItem={({ item }) => (
+            <RepoListItem
+              title={item.name}
+              imageUrl={item.owner.avatar_url}
+              language={item.language}
+              description={item.description}
+              author={item.owner.login}
+              starNumber={item.stargazers_count}
+              forkNumber={item.forks_count}
+            />
+          )}
           onRefresh={() => this.handleRefresh()}
           refreshing={this.state.refreshing}
-          ListEmptyComponent={<EmptyPage />}
+          keyExtractor={(item, index) => index}
+          onEndReached={() => this.handleEndReached()}
+          onEndReachedThreshold={scaleSize(1)}
         />
       </View>
     );
+  }
+
+  getStarredList(isRefresh) {
+    const promiseLoginData = AsyncStorage.getItem(LOGIN_DATA);
+    const promisePassword = AsyncStorage.getItem(PASSWORD);
+    Promise.all([promiseLoginData, promisePassword])
+      .then(([data, password]) => {
+        fetchGet(
+          STARRED_URL,
+          JSON.parse(data).login,
+          password,
+          { page: this.state.page },
+          data => {
+            if (isRefresh) {
+              this.setState({ data: data, refreshing: false });
+            } else {
+              console.log(data);
+              
+              console.log([...this.state.data,...data]);
+              
+              this.setState(
+                {
+                  data: [...this.state.data,...data],
+                  refreshing: false
+                },
+                () => {
+                  if (data.length === 0) {
+                    toast("没有更多数据了！");
+                    this.setState({ page: this.state.page - 1 });
+                  }
+                }
+              );
+            }
+          },
+          error => {
+            this.setState({ refreshing: false });
+            console.log(error);
+          }
+        );
+      })
+      .catch(error => {
+        this.setState({ refreshing: false });
+        console.log(error);
+      });
   }
 }
 

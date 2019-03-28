@@ -7,7 +7,11 @@ export default class RepoListItem extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Image source={{ uri: this.props.imageUrl }} style={styles.imageUrl} />
+        <Image
+          source={{ uri: this.props.imageUrl }}
+          style={styles.imageUrl}
+          defaultSource={require("../assets/img/defaultImg.png")}
+        />
         <View>
           <View style={styles.contentTitle}>
             <Text style={styles.title}>{this.props.title}</Text>
@@ -20,7 +24,7 @@ export default class RepoListItem extends Component {
               <Text style={styles.starNumber}>{this.props.starNumber}</Text>
             </View>
             <View style={styles.starForkNumberContainer}>
-            <Icon name="fork" size={scaleSize(24)} color={"gray"} />
+              <Icon name="fork" size={scaleSize(24)} color={"gray"} />
               <Text style={styles.forkNumber}>{this.props.forkNumber}</Text>
             </View>
 
@@ -47,7 +51,6 @@ const styles = StyleSheet.create({
   imageUrl: {
     height: scaleSize(100),
     width: scaleSize(100),
-    backgroundColor: "yellow",
     marginLeft: scaleSize(10),
     marginTop: scaleSize(10)
   },

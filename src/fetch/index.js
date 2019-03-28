@@ -43,6 +43,8 @@ export function fetchGet(url, userName, password, params ,func, funcError) {
   Object.keys(params).forEach(function (key) {
     paramArr.push(`${key}=${params[key]}`);
   });
+  console.log(`${url}?${paramArr.join('&')}`);
+  
   fetch(`${url}?${paramArr.join('&')}`, {
     method: "get",
     headers: {
