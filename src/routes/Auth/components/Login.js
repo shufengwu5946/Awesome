@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, ToastAndroid, StatusBar } from "react-native";
+import { StyleSheet, Text, View, StatusBar } from "react-native";
 import { scaleSize } from "../../../utils/ScreenUtil";
 import { Button, InputItem } from "@ant-design/react-native";
 import {
@@ -8,6 +8,7 @@ import {
   login
 } from "../../../actions/auth";
 import { connect } from "react-redux";
+import Icon from "react-native-vector-icons/AntDesign";
 
 class Login extends React.Component {
   constructor(props) {
@@ -24,6 +25,13 @@ class Login extends React.Component {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
+        <Icon
+          name="github"
+          color = "green"
+          size = {scaleSize(200)}
+          style = {styles.logo}
+        />
+
         <InputItem
           style={styles.inputItem}
           clear
@@ -72,6 +80,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     paddingLeft: scaleSize(50),
     paddingRight: scaleSize(50)
+  },
+  logo: {
+    marginBottom:scaleSize(100)
   },
   inputItem: {
     fontSize: scaleSize(34),

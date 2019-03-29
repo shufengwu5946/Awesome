@@ -1,36 +1,42 @@
 import React, { Component } from "react";
-import { StyleSheet, Image, View, Text } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import { scaleSize } from "../utils/ScreenUtil";
 import Icon from "react-native-vector-icons/AntDesign";
+import { Image } from "react-native-expo-image-cache";
 
 export default class RepoListItem extends Component {
   render() {
+    const defaultSource = {uri:"../assets/img/defaultImg.png"};
+    const {
+      imageUrl,
+      title,
+      language,
+      description,
+      starNumber,
+      forkNumber,
+      author
+    } = this.props;
     return (
       <View style={styles.container}>
-        <Image
-          source={{ uri: this.props.imageUrl }}
-          style={styles.imageUrl}
-          defaultSource={require("../assets/img/defaultImg.png")}
-        />
+        <Image style={styles.imageUrl} {...{ defaultSource, imageUrl }} />
         <View>
           <View style={styles.contentTitle}>
-            <Text style={styles.title}>{this.props.title}</Text>
-            <Text style={styles.language}>{this.props.language}</Text>
+            <Text style={styles.title}>{title}</Text>
+            <Text style={styles.language}>{language}</Text>
           </View>
-          <Text style={styles.description}>{this.props.description}</Text>
+          <Text style={styles.description}>{description}</Text>
           <View style={styles.contentAuthor}>
             <View style={styles.starForkNumberContainer}>
               <Icon name="star" size={scaleSize(24)} color={"gray"} />
-              <Text style={styles.starNumber}>{this.props.starNumber}</Text>
+              <Text style={styles.starNumber}>{starNumber}</Text>
             </View>
             <View style={styles.starForkNumberContainer}>
               <Icon name="fork" size={scaleSize(24)} color={"gray"} />
-              <Text style={styles.forkNumber}>{this.props.forkNumber}</Text>
+              <Text style={styles.forkNumber}>{forkNumber}</Text>
             </View>
-
             <View style={styles.authorContainer}>
               <Icon name="user" size={scaleSize(24)} color={"gray"} />
-              <Text style={styles.author}>{this.props.author}</Text>
+              <Text style={styles.author}>{author}</Text>
             </View>
           </View>
         </View>
@@ -52,7 +58,8 @@ const styles = StyleSheet.create({
     height: scaleSize(100),
     width: scaleSize(100),
     marginLeft: scaleSize(10),
-    marginTop: scaleSize(10)
+    marginTop: scaleSize(10),
+    borderRadius: scaleSize(50)
   },
   contentTitle: {
     flexDirection: "row"

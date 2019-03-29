@@ -44,7 +44,6 @@ export default class UserBar extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#DDDDDD",
     height: scaleSize(200),
     flexDirection: "row",
     alignItems: "center",
@@ -53,7 +52,8 @@ const styles = StyleSheet.create({
   avatar: {
     width: scaleSize(160),
     height: scaleSize(160),
-    backgroundColor: "#FFFFFF"
+    backgroundColor: "#FFFFFF",
+    borderRadius:scaleSize(80),
   },
   userInfo: {
     flex: 1,
