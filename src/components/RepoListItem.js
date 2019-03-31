@@ -1,12 +1,15 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import { scaleSize } from "../utils/ScreenUtil";
 import Icon from "react-native-vector-icons/AntDesign";
-import { Image } from "react-native-expo-image-cache";
+import NavigationService from "../routes/Auth/containers/NavigationService";
 
 export default class RepoListItem extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
-    const defaultSource = {uri:"../assets/img/defaultImg.png"};
     const {
       imageUrl,
       title,
@@ -17,30 +20,43 @@ export default class RepoListItem extends Component {
       author
     } = this.props;
     return (
-      <View style={styles.container}>
-        <Image style={styles.imageUrl} {...{ defaultSource, imageUrl }} />
-        <View>
-          <View style={styles.contentTitle}>
-            <Text style={styles.title}>{title}</Text>
-            <Text style={styles.language}>{language}</Text>
-          </View>
-          <Text style={styles.description}>{description}</Text>
-          <View style={styles.contentAuthor}>
-            <View style={styles.starForkNumberContainer}>
-              <Icon name="star" size={scaleSize(24)} color={"gray"} />
-              <Text style={styles.starNumber}>{starNumber}</Text>
+      <TouchableOpacity
+        onPress={() => {
+          NavigationService.navigate("RepoDetail", {
+            title: title,
+            author: author
+          });
+        }}
+      >
+        <View style={styles.container}>
+          <Image
+            style={styles.imageUrl}
+            source={{ uri: imageUrl }}
+            defaultSource={require("../assets/img/defaultImg.png")}
+          />
+          <View>
+            <View style={styles.contentTitle}>
+              <Text style={styles.title}>{title}</Text>
+              <Text style={styles.language}>{language}</Text>
             </View>
-            <View style={styles.starForkNumberContainer}>
-              <Icon name="fork" size={scaleSize(24)} color={"gray"} />
-              <Text style={styles.forkNumber}>{forkNumber}</Text>
-            </View>
-            <View style={styles.authorContainer}>
-              <Icon name="user" size={scaleSize(24)} color={"gray"} />
-              <Text style={styles.author}>{author}</Text>
+            <Text style={styles.description}>{description}</Text>
+            <View style={styles.contentAuthor}>
+              <View style={styles.starForkNumberContainer}>
+                <Icon name="star" size={scaleSize(24)} color={"gray"} />
+                <Text style={styles.starNumber}>{starNumber}</Text>
+              </View>
+              <View style={styles.starForkNumberContainer}>
+                <Icon name="fork" size={scaleSize(24)} color={"gray"} />
+                <Text style={styles.forkNumber}>{forkNumber}</Text>
+              </View>
+              <View style={styles.authorContainer}>
+                <Icon name="user" size={scaleSize(24)} color={"gray"} />
+                <Text style={styles.author}>{author}</Text>
+              </View>
             </View>
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 }

@@ -14,6 +14,7 @@ import { setScreenHeight as setScreenH } from "./src/actions/auth";
 import { Dimensions } from "react-native";
 import ExtraDimensions from "react-native-extra-dimensions-android";
 import { screenHeight } from "./src/reducers/auth";
+import NavigationService from "./src/routes/Auth/containers/NavigationService";
 
 class App extends Component {
   constructor(props) {
@@ -40,6 +41,10 @@ class App extends Component {
             DeviceEventEmitter.removeAllListeners("WillShow");
           }
           routes = nav.routes;
+        }}
+
+        ref={navigatorRef => {
+          NavigationService.setTopLevelNavigator(navigatorRef);
         }}
       />
     );

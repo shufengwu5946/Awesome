@@ -15,6 +15,7 @@ import UserTabView from "./tabview/UserTabView";
 import StarPage from "./tabview/StarPage";
 import ReactPage from "./tabview/ReactPage";
 import ActivityPage from "./tabview/ActivityPage";
+import ActivityListItem from "../../../components/ActivityListItem";
 
 export default class User extends Component {
   constructor(props) {
@@ -35,11 +36,29 @@ export default class User extends Component {
       { key: "third", title: "Third" }
     ];
 
-    const scenes = { stars: StarPage, activity: ActivityPage, third: ReactPage };
+    const scenes = {
+      stars: StarPage,
+      activity: ActivityPage,
+      third: ReactPage
+    };
 
     return (
       <View style={styles.container}>
         <UserBar />
+        {/* <ActivityListItem
+          imageUrl={
+            "https://avatars3.githubusercontent.com/u/44724122?s=40&v=4"
+          }
+          userName={"shufengwu5946"}
+          time={"2019-01-01 00:00:00"}
+          event={{
+            type: "WatchEvent",
+            repo: {
+              name:
+                "NNNNNNNNNhttpshttpshttpshttpshttpshttpshttpshttpshttpshttpshttpshttpshttpshttpshttpshttpshttpshttpshttpshttpshttpshttpshttpshttpshttps"
+            }
+          }}
+        /> */}
         <UserTabView routes={routes} scenes={scenes} />
       </View>
     );
@@ -48,7 +67,7 @@ export default class User extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    height:'100%',
+    height: "100%",
     justifyContent: "center",
     backgroundColor: "#FFFFFF"
   },

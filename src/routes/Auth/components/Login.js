@@ -11,13 +11,14 @@ import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/AntDesign";
 
 class Login extends React.Component {
+
   constructor(props) {
     super(props);
   }
 
   componentDidUpdate() {
     if (this.props.loginSuccStatus) {
-      this.props.navigation.navigate("Main");
+      this.props.navigation.navigate("MainStack");
     }
   }
 

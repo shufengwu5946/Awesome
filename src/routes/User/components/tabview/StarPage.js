@@ -9,10 +9,8 @@ import {
   Alert,
   ToastAndroid
 } from "react-native";
-import EmptyPage from "./EmptyPage";
 import { fetchGet } from "../../../../fetch/index";
 import { STARRED_URL } from "../../../../constants/fetch";
-import { connect } from "react-redux";
 import RepoListItem from "../../../../components/RepoListItem";
 import { PASSWORD, LOGIN_DATA } from "../../../../constants/asyncStorageKey";
 import AsyncStorage from "@react-native-community/async-storage";
@@ -43,6 +41,10 @@ class StarPage extends Component {
       this.getStarredList(false);
     });
   }
+
+  // onItemPress() {
+  //   this.context.navigate("RepoDetail");
+  // }
 
   render() {
     return (
@@ -86,12 +88,12 @@ class StarPage extends Component {
               this.setState({ data: data, refreshing: false });
             } else {
               console.log(data);
-              
-              console.log([...this.state.data,...data]);
-              
+
+              console.log([...this.state.data, ...data]);
+
               this.setState(
                 {
-                  data: [...this.state.data,...data],
+                  data: [...this.state.data, ...data],
                   refreshing: false
                 },
                 () => {
@@ -116,11 +118,4 @@ class StarPage extends Component {
   }
 }
 
-const styles = StyleSheet.create({});
-
-const mapStateToProps = state => ({
-  userName: state.userName,
-  password: state.password
-});
-
-export default connect(mapStateToProps)(StarPage);
+export default StarPage;

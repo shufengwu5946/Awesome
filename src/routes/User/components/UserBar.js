@@ -3,6 +3,7 @@ import { ScrollView, Image, Text, View, StyleSheet } from "react-native";
 import { scaleSize } from "../../../utils/ScreenUtil";
 import { LOGIN_DATA } from "../../../constants/asyncStorageKey";
 import AsyncStorage from "@react-native-community/async-storage";
+import utc2beijing from "../../../utils/TimeUtils";
 
 export default class UserBar extends Component {
   constructor(props) {
@@ -33,9 +34,9 @@ export default class UserBar extends Component {
         <Image style={styles.avatar} source={{ uri: this.state.avatarUrl }} />
         <View style={styles.userInfo}>
           <Text style={styles.userName}>{this.state.name}</Text>
-          <Text style={styles.userJoinDate}>{`加入时间 ${
+          <Text style={styles.userJoinDate}>{`加入时间 ${utc2beijing(
             this.state.joinDate
-          }`}</Text>
+          )}`}</Text>
         </View>
       </View>
     );
@@ -53,7 +54,7 @@ const styles = StyleSheet.create({
     width: scaleSize(160),
     height: scaleSize(160),
     backgroundColor: "#FFFFFF",
-    borderRadius:scaleSize(80),
+    borderRadius: scaleSize(80)
   },
   userInfo: {
     flex: 1,

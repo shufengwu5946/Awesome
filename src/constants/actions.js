@@ -4,3 +4,4 @@ export const LOGIN_START = 'LOGIN_START';
 export const SET_USER_NAME = 'SET_USER_NAME';
 export const SET_PASSWORD = 'SET_PASSWORD';
 export const SET_SCREEN_HEIGHT = 'SET_SCREEN_HEIGHT';
+export const SET_NAVIGATION = 'SET_NAVIGATION';

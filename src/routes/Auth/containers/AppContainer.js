@@ -2,7 +2,8 @@ import React from "react";
 import {
   createSwitchNavigator,
   createBottomTabNavigator,
-  createAppContainer
+  createAppContainer,
+  createStackNavigator
 } from "react-navigation";
 import Login from "../components/Login";
 import Main from "../components/Main";
@@ -10,11 +11,31 @@ import Trends from "../components/Trends";
 import StartPage from "../components/StartPage";
 import Icon from "react-native-vector-icons/AntDesign";
 import { scaleSize } from "../../../utils/ScreenUtil";
+import RepoDetail from "../../../components/RepoDetail";
+
+const UserStack = createStackNavigator(
+  {
+    Main: Main,
+  },
+  {
+    initialRouteName: "Main"
+  }
+);
 
 const MainStack = createBottomTabNavigator(
   {
-    Trends: Trends,
-    User: Main,
+    Trends: {
+      screen: Trends,
+      navigationOptions: {
+        tabBarLabel: "动态"
+      }
+    },
+    UserStack: {
+      screen: UserStack,
+      navigationOptions: {
+        tabBarLabel: "我的"
+      }
+    }
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
@@ -22,9 +43,9 @@ const MainStack = createBottomTabNavigator(
         const { routeName } = navigation.state;
         let IconComponent = Icon;
         let iconName;
-        if (routeName === "User") {
+        if (routeName === "UserStack") {
           iconName = "user";
-        }else if(routeName === "Trends"){
+        } else if (routeName === "Trends") {
           iconName = "home";
         }
         return (
@@ -47,15 +68,29 @@ const MainStack = createBottomTabNavigator(
   }
 );
 
-export default createAppContainer(
-  createSwitchNavigator(
-    {
-      Start: StartPage,
-      Login: Login,
-      Main: MainStack
-    },
-    {
-      initialRouteName: "Start"
+const LoginSwitch = createSwitchNavigator(
+  {
+    Start: StartPage,
+    Login: Login,
+    MainStack: MainStack
+  },
+  {
+    navigationOptions: {
+      header: null
     }
-  )
+  }
 );
+
+const StartStatck = createStackNavigator(
+  {
+    LoginSwitch: LoginSwitch,
+    RepoDetail: RepoDetail
+  },
+  {
+    navigationOptions: {
+      header: null
+    }
+  }
+);
+
+export default createAppContainer(StartStatck);

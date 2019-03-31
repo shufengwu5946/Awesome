@@ -3,9 +3,9 @@ import { StyleSheet, Text, View, StatusBar } from "react-native";
 import { scaleSize } from "../../../utils/ScreenUtil";
 
 export default class Trends extends React.Component {
-  static navigationOptions = {
-    title: "动态"
-  };
+  // static navigationOptions = {
+  //   title: "动态"
+  // };
 
   constructor(props) {
     super(props);

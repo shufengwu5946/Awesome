@@ -1,12 +1,12 @@
 import React from "react";
 import { StyleSheet, Text, View, StatusBar } from "react-native";
 import { scaleSize } from "../../../utils/ScreenUtil";
-import User from '../../User/components/User';
+import User from "../../User/components/User";
 
 export default class Main extends React.Component {
-
   static navigationOptions = {
-    title: '我的',
+    // title: "我的",
+    header: null
   };
 
   constructor(props) {
@@ -16,7 +16,7 @@ export default class Main extends React.Component {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
-        <User/>
+        <User />
       </View>
     );
   }
