@@ -3,6 +3,9 @@ import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import { scaleSize } from "../utils/ScreenUtil";
 import Icon from "react-native-vector-icons/AntDesign";
 import NavigationService from "../routes/Auth/containers/NavigationService";
+import FastImage from 'react-native-fast-image'
+import { createImageProgress } from 'react-native-image-progress';
+
 
 export default class RepoListItem extends Component {
   constructor(props) {
@@ -10,6 +13,7 @@ export default class RepoListItem extends Component {
   }
 
   render() {
+    const Image = createImageProgress(FastImage);
     const {
       imageUrl,
       title,
@@ -32,7 +36,7 @@ export default class RepoListItem extends Component {
           <Image
             style={styles.imageUrl}
             source={{ uri: imageUrl }}
-            defaultSource={require("../assets/img/defaultImg.png")}
+            resizeMode={FastImage.resizeMode.contain}
           />
           <View>
             <View style={styles.contentTitle}>

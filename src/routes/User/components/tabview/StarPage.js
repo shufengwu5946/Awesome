@@ -65,7 +65,7 @@ class StarPage extends Component {
           )}
           onRefresh={() => this.handleRefresh()}
           refreshing={this.state.refreshing}
-          keyExtractor={(item, index) => index}
+          keyExtractor={(item, index) => index.toString()}
           onEndReached={() => this.handleEndReached()}
           onEndReachedThreshold={scaleSize(1)}
         />
