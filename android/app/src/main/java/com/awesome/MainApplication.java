@@ -4,7 +4,6 @@ import android.app.Application;
 
 import com.awesome.markdown.TextViewPackage;
 import com.facebook.react.ReactApplication;
-import com.reactnativecommunity.webview.RNCWebViewPackage;
 import com.dylanvann.fastimage.FastImageViewPackage;
 import com.horcrux.svg.SvgPackage;
 import com.swmansion.reanimated.ReanimatedPackage;
@@ -31,7 +30,6 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
-            new RNCWebViewPackage(),
             new FastImageViewPackage(),
             new SvgPackage(),
                     new ReanimatedPackage(),
