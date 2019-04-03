@@ -93,12 +93,12 @@ export function fetchGetReadme(url, userName, password, params, func, funcError)
   })
     .then(handleResponse)
     .then(data => {
-      console.log(data);
+      // console.log(data);
       
       func(data);
     })
     .catch(error => {
-      console.log(error);
+      // console.log(error);
       
       funcError(error);
     });
