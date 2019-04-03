@@ -61,6 +61,7 @@ class StarPage extends Component {
               author={item.owner.login}
               starNumber={item.stargazers_count}
               forkNumber={item.forks_count}
+              size={item.size}
             />
           )}
           onRefresh={() => this.handleRefresh()}

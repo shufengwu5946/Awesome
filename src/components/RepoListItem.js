@@ -3,9 +3,8 @@ import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import { scaleSize } from "../utils/ScreenUtil";
 import Icon from "react-native-vector-icons/AntDesign";
 import NavigationService from "../routes/Auth/containers/NavigationService";
-import FastImage from 'react-native-fast-image'
-import { createImageProgress } from 'react-native-image-progress';
-
+import FastImage from "react-native-fast-image";
+import { createImageProgress } from "react-native-image-progress";
 
 export default class RepoListItem extends Component {
   constructor(props) {
@@ -21,14 +20,17 @@ export default class RepoListItem extends Component {
       description,
       starNumber,
       forkNumber,
-      author
+      author,
+      size
     } = this.props;
     return (
       <TouchableOpacity
         onPress={() => {
           NavigationService.navigate("RepoDetail", {
             title: title,
-            author: author
+            author: author,
+            size: size,
+            description: description
           });
         }}
       >
