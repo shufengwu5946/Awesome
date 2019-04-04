@@ -7,36 +7,16 @@
  */
 
 import React, { Component } from "react";
-import { StyleSheet, View } from "react-native";
 import App from "./App";
-import { Provider, connect } from "react-redux";
-import { createStore, applyMiddleware } from "redux";
-import thunk from "redux-thunk";
-import reducer from "./src/reducers";
-
-const store = createStore(reducer, applyMiddleware(thunk));
-
-const mapStateToProps = () => ({});
-
-const MainApp = connect(mapStateToProps)(App);
+import { Provider } from "react-redux";
+import store from "./src/store";
 
 export default class Root extends Component {
   render() {
     return (
-      
-        <Provider store={store}>
-          <MainApp />
-        </Provider>
-      
+      <Provider store={store}>
+        <App />
+      </Provider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#FFFFFF"
-  }
-});

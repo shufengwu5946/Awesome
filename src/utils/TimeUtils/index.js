@@ -1,4 +1,4 @@
-var moment = require('moment');
+var moment = require("moment");
 export default function utc2beijing(utc_datetime) {
   // 转为正常的时间格式 年-月-日 时:分:秒
   var T_pos = utc_datetime.indexOf("T");
@@ -16,9 +16,11 @@ export default function utc2beijing(utc_datetime) {
   var timestamp = timestamp + 8 * 60 * 60;
 
   // 时间戳转为时间
-  var beijing_datetime = moment(new Date(parseInt(timestamp) * 1000)).format('YYYY-MM-DD HH:mm:ss');
+  var beijing_datetime = moment(new Date(parseInt(timestamp) * 1000)).format(
+    "YYYY-MM-DD HH:mm:ss"
+  );
 
   console.log(beijing_datetime);
-    
+
   return beijing_datetime; // 2017-03-31 16:02:06
 }

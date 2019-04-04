@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
-import { scaleSize } from "../utils/ScreenUtil";
+import { scaleSize } from "../utils/ScreenUtils";
 import Icon from "react-native-vector-icons/AntDesign";
-import NavigationService from "../routes/Auth/containers/NavigationService";
+import NavigationService from "../routes/containers/NavigationService";
 import FastImage from "react-native-fast-image";
 import { createImageProgress } from "react-native-image-progress";
 

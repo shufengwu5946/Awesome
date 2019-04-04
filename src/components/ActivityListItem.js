@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
-import { scaleSize } from "../utils/ScreenUtil";
+import { scaleSize } from "../utils/ScreenUtils";
 import getEvent from "./EventComponent";
 
 export default class ActivityListItem extends Component {

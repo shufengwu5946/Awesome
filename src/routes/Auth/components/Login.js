@@ -1,12 +1,12 @@
 import React from "react";
 import { StyleSheet, Text, View, StatusBar } from "react-native";
-import { scaleSize } from "../../../utils/ScreenUtil";
+import { scaleSize } from "../../../utils/ScreenUtils";
 import { Button, InputItem } from "@ant-design/react-native";
 import {
   setUserName as setUser,
   setPassword as setPass,
   login
-} from "../../../actions/auth";
+} from "../../../actions/Auth";
 import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/AntDesign";
 

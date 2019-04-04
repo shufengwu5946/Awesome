@@ -7,17 +7,16 @@ import {
   ScrollView,
   Linking,
   WebView,
-  TouchableNativeFeedback
+  TouchableNativeFeedback,
+  Dimensions
 } from "react-native";
 import Icon from "react-native-vector-icons/AntDesign";
 // import { WebView } from 'react-native-webview';
-import { scaleSize } from "../utils/ScreenUtil";
+import { scaleSize } from "../utils/ScreenUtils";
 import { fetchGetReadme } from "../fetch";
-import { README_URL } from "../constants/fetch";
+import { README_URL } from "../constants/Fetch";
 // import { BoxShadow } from "react-native-shadow";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
-
-
 
 export default class RepoDetail extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -56,63 +55,71 @@ export default class RepoDetail extends Component {
 
   constructor(props) {
     super(props);
+    const routes = [{ key: "info", title: "信息" }];
     const { navigation } = this.props;
     const title = navigation.getParam("title", "");
     const author = navigation.getParam("author", "");
     const description = navigation.getParam("description", "");
     this.state = {
       readme: "",
-      height: 0,
       title: title,
       author: author,
-      description: description
+      description: description,
+      index: 0,
+      routes: routes
     };
   }
 
   componentDidMount() {
-    fetchGetReadme(
-      README_URL(this.state.title, this.state.author),
-      "",
-      "",
-      {},
-      data => {
+    fetchGetReadme(README_URL(this.state.title, this.state.author), {})
+      .then(data => {
         this.setState({
           readme: data,
           title: this.state.title
         });
-      },
-      error => {
+      })
+      .catch(error => {
         console.log(error);
-      }
-    );
+      });
   }
   render() {
     return (
-      <ScrollView>
-        <View style={styles.container}>
-          <View style={styles.border}>
-            <Text style={styles.title} ellipsizeMode="tail" numberOfLines={1}>
-              {this.state.title}
-            </Text>
-            <Text style={styles.description}>{this.state.description}</Text>
-          </View>
-          <RepoInfo readme = {this.state.readme} height = {this.state.height}/>
+      <ScrollView style={styles.container} nestedScrollEnabled={true}>
+        <View style={styles.border}>
+          <Text style={styles.title} ellipsizeMode="tail" numberOfLines={1}>
+            {this.state.title}
+          </Text>
+          <Text style={styles.description}>{this.state.description}</Text>
         </View>
+        <TabView
+          navigationState={this.state}
+          renderScene={({ route, jumpTo }) => {
+            switch (route.key) {
+              case "info":
+                return <RepoInfo readme={this.state.readme} />;
+            }
+          }}
+          onIndexChange={index => this.setState({ index })}
+          initialLayout={{ width: Dimensions.get("window").width }}
+          renderTabBar={props => (
+            <TabBar
+              lazy
+              {...props}
+              indicatorStyle={{ backgroundColor: "green" }}
+              style={{ backgroundColor: "white" }}
+              labelStyle={{
+                textTransform: "capitalize",
+                fontSize: scaleSize(30)
+              }}
+              activeColor="green"
+              inactiveColor="gray"
+              contentContainerStyle={{ height: scaleSize(100) }}
+            />
+          )}
+        />
       </ScrollView>
     );
   }
-
-  // onMessage(event) {
-  //   try {
-  //     const action = JSON.parse(event.nativeEvent.data);
-  //     if (action.type === "setHeight" && action.height > 0) {
-  //       this.setState({ height: action.height });
-  //     }
-  //   } catch (error) {
-  //     // pass
-  //     console.log(error);
-  //   }
-  // }
 
   // _injectJavaScript = () => `
   //       var a = document.getElementsByTagName('a');
@@ -131,9 +138,15 @@ export default class RepoDetail extends Component {
   // };
 }
 
-const RepoInfo = props => {
+class RepoInfo extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      height: 0
+    };
+  }
 
-  const getHtmlHeight = `
+  getHtmlHeight = `
   (function () {
       var height = null;
       function changeHeight() {
@@ -151,7 +164,7 @@ const RepoInfo = props => {
   } ())
   `;
 
-  const onMessage = (event) => {
+  onMessage = event => {
     try {
       const action = JSON.parse(event.nativeEvent.data);
       if (action.type === "setHeight" && action.height > 0) {
@@ -163,22 +176,24 @@ const RepoInfo = props => {
     }
   };
 
-  return (
-    <View style={styles.border}>
-      <WebView
-        source={{ html: props.readme }}
-        javaScriptEnabled={true}
-        style={{
-          height: props.height
-        }}
-        onMessage={event => onMessage(event)}
-        injectedJavaScript={getHtmlHeight}
-      />
-    </View>
-  );
-
-  
-};
+  render() {
+    return (
+      <ScrollView nestedScrollEnabled={true}>
+        <View style={{ height: this.state.height, ...styles.border }}>
+          <WebView
+            source={{ html: this.props.readme }}
+            javaScriptEnabled={true}
+            style={{
+              height: this.state.height
+            }}
+            onMessage={event => this.onMessage(event)}
+            injectedJavaScript={this.getHtmlHeight}
+          />
+        </View>
+      </ScrollView>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   title: {

@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View, StatusBar } from "react-native";
-import { scaleSize } from "../../../utils/ScreenUtil";
+import { scaleSize } from "../../../utils/ScreenUtils";
 
 export default class Trends extends React.Component {
   // static navigationOptions = {

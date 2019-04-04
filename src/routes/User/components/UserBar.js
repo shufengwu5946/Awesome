@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { ScrollView, Image, Text, View, StyleSheet } from "react-native";
-import { scaleSize } from "../../../utils/ScreenUtil";
-import { LOGIN_DATA } from "../../../constants/asyncStorageKey";
-import AsyncStorage from "@react-native-community/async-storage";
+import { Image, Text, View, StyleSheet } from "react-native";
+import { scaleSize } from "../../../utils/ScreenUtils";
+import { LOGIN_DATA } from "../../../constants/AsyncStorage";
 import utc2beijing from "../../../utils/TimeUtils";
+import { retrieveData } from "../../../utils/AsyncStorageUtils";
 
 export default class UserBar extends Component {
   constructor(props) {
@@ -12,14 +12,13 @@ export default class UserBar extends Component {
   }
 
   componentDidMount() {
-    AsyncStorage.getItem(LOGIN_DATA)
-      .then(value => {
-        if (value) {
-          // console.log(JSON.parse(value));
+    retrieveData([LOGIN_DATA])
+      .then(datas => {
+        if (datas[0]) {
           this.setState({
-            avatarUrl: JSON.parse(value).avatar_url,
-            name: JSON.parse(value).login,
-            joinDate: JSON.parse(value).created_at
+            avatarUrl: JSON.parse(datas[0]).avatar_url,
+            name: JSON.parse(datas[0]).login,
+            joinDate: JSON.parse(datas[0]).created_at
           });
         }
       })

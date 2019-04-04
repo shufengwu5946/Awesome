@@ -1,13 +1,12 @@
 import React, { Component } from "react";
-import { View, StyleSheet, FlatList } from "react-native";
-import { fetchGet } from "../../../../fetch/index";
-import { EVENTS_URL } from "../../../../constants/fetch";
-import { LOGIN_DATA } from "../../../../constants/asyncStorageKey";
-import AsyncStorage from "@react-native-community/async-storage";
+import { View, FlatList } from "react-native";
+import { fetchGetWithOutAuth } from "../../../../fetch/index";
+import { EVENTS_URL } from "../../../../constants/Fetch";
+import { LOGIN_DATA } from "../../../../constants/AsyncStorage";
 import toast from "../../../../utils/ToastUtils";
-import { scaleSize } from "../../../../utils/ScreenUtil";
+import { scaleSize } from "../../../../utils/ScreenUtils";
 import ActivityListItem from "../../../../components/ActivityListItem";
-import utc2beijing from "../../../../utils/TimeUtils";
+import { retrieveData } from "../../../../utils/AsyncStorageUtils";
 
 class ActivityPage extends Component {
   constructor(props) {
@@ -40,11 +39,7 @@ class ActivityPage extends Component {
         <FlatList
           showsVerticalScrollIndicator={false}
           data={this.state.data}
-          renderItem={({ item }) => (
-            <ActivityListItem
-              item = {item}
-            />
-          )}
+          renderItem={({ item }) => <ActivityListItem item={item} />}
           onRefresh={() => this.handleRefresh()}
           refreshing={this.state.refreshing}
           keyExtractor={(item, index) => index.toString()}
@@ -56,37 +51,29 @@ class ActivityPage extends Component {
   }
 
   getActivityList(isRefresh) {
-    const promiseLoginData = AsyncStorage.getItem(LOGIN_DATA);
-    Promise.all([promiseLoginData])
-      .then(([data]) => {
-        fetchGet(
-          EVENTS_URL(JSON.parse(data).login),
-          "",
-          "",
-          { page: this.state.page },
-          data => {
-            if (isRefresh) {
-              this.setState({ data: data, refreshing: false });
-            } else {
-              this.setState(
-                {
-                  data: [...this.state.data, ...data],
-                  refreshing: false
-                },
-                () => {
-                  if (data.length === 0) {
-                    toast("没有更多数据了！");
-                    this.setState({ page: this.state.page - 1 });
-                  }
-                }
-              );
+    retrieveData([LOGIN_DATA])
+      .then(datas => {
+        return fetchGetWithOutAuth(EVENTS_URL(JSON.parse(datas[0]).login), {
+          page: this.state.page
+        });
+      })
+      .then(data => {
+        if (isRefresh) {
+          this.setState({ data: data, refreshing: false });
+        } else {
+          this.setState(
+            {
+              data: [...this.state.data, ...data],
+              refreshing: false
+            },
+            () => {
+              if (data.length === 0) {
+                toast("没有更多数据了！");
+                this.setState({ page: this.state.page - 1 });
+              }
             }
-          },
-          error => {
-            this.setState({ refreshing: false });
-            console.log(error);
-          }
-        );
+          );
+        }
       })
       .catch(error => {
         this.setState({ refreshing: false });

@@ -1,5 +1,5 @@
 import { ToastAndroid } from "react-native";
-import { scaleSize } from "./ScreenUtil";
+import { scaleSize } from "../ScreenUtils";
 
 const toast = (str) => {
   ToastAndroid.showWithGravityAndOffset(

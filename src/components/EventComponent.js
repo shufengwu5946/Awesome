@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text } from "react-native";
-import { scaleSize } from "../utils/ScreenUtil";
-import EventType from "../constants/activity";
+import { scaleSize } from "../utils/ScreenUtils";
+import EventType from "../constants/User/Activity";
 const getEvent = (
   userName,
   eventType,

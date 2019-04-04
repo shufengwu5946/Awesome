@@ -3,11 +3,8 @@ import {
   LOGIN_FAIL,
   LOGIN_START,
   SET_USER_NAME,
-  SET_PASSWORD,
-  SET_SCREEN_HEIGHT
-} from "../constants/actions";
-
-import ExtraDimensions from "react-native-extra-dimensions-android";
+  SET_PASSWORD
+} from "../constants/Actions";
 
 export const loading = (state = false, action) => {
   switch (action.type) {

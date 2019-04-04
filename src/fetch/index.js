@@ -15,7 +15,7 @@ function handleJSONResponse(response) {
   });
 }
 
-function handleGithubHtmlResponse(response){
+function handleGithubHtmlResponse(response) {
   return response.text().then(text => {
     if (response.ok) {
       return text;
@@ -33,7 +33,7 @@ function handleResponse(response) {
   const contentType = response.headers.get("content-type");
   if (contentType.includes("application/json")) {
     return handleJSONResponse(response);
-  }else if(contentType.includes("application/vnd.github.VERSION.html")){
+  } else if (contentType.includes("application/vnd.github.VERSION.html")) {
     return handleGithubHtmlResponse(response);
   }
   throw new Error(`Sorry, content-type ${contentType} not supported`);
@@ -55,51 +55,45 @@ export function fetchLogin(url, userName, password, func, funcError) {
     });
 }
 
-export function fetchGet(url, userName, password, params, func, funcError) {
+export const fetchGetWithAuth = (url, userName, password, params) => {
   let paramArr = [];
   Object.keys(params).forEach(function(key) {
     paramArr.push(`${key}=${params[key]}`);
   });
   console.log(`${url}?${paramArr.join("&")}`);
 
-  fetch(`${url}?${paramArr.join("&")}`, {
+  return fetch(`${url}?${paramArr.join("&")}`, {
     method: "get",
     headers: {
       Authorization: `Basic ${Base64.encode(`${userName}:${password}`)}`
     }
-  })
-    .then(handleResponse)
-    .then(data => {
-      func(data);
-    })
-    .catch(error => {
-      funcError(error);
-    });
-}
+  }).then(handleResponse);
+};
 
-export function fetchGetReadme(url, userName, password, params, func, funcError) {
+export const fetchGetWithOutAuth = (url, params) => {
   let paramArr = [];
   Object.keys(params).forEach(function(key) {
     paramArr.push(`${key}=${params[key]}`);
   });
   console.log(`${url}?${paramArr.join("&")}`);
 
-  fetch(`${url}?${paramArr.join("&")}`, {
+  return fetch(`${url}?${paramArr.join("&")}`, {
+    method: "get",
+    headers: {}
+  }).then(handleResponse);
+};
+
+export const fetchGetReadme = (url, params) => {
+  let paramArr = [];
+  Object.keys(params).forEach(function(key) {
+    paramArr.push(`${key}=${params[key]}`);
+  });
+  console.log(`${url}?${paramArr.join("&")}`);
+
+  return fetch(`${url}?${paramArr.join("&")}`, {
     method: "get",
     headers: {
-      Authorization: `Basic ${Base64.encode(`${userName}:${password}`)}`,
-      Accept:'application/vnd.github.VERSION.html'
+      Accept: "application/vnd.github.VERSION.html"
     }
-  })
-    .then(handleResponse)
-    .then(data => {
-      // console.log(data);
-      
-      func(data);
-    })
-    .catch(error => {
-      // console.log(error);
-      
-      funcError(error);
-    });
-}
+  }).then(handleResponse);
+};

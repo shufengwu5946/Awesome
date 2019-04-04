@@ -5,13 +5,13 @@ import {
   createAppContainer,
   createStackNavigator
 } from "react-navigation";
-import Login from "../components/Login";
-import Main from "../components/Main";
-import Trends from "../components/Trends";
-import StartPage from "../components/StartPage";
+import Login from "../Auth/components/Login";
+import Main from "../Auth/components/Main";
+import Trends from "../Auth/components/Trends";
+import StartPage from "../Auth/components/StartPage";
 import Icon from "react-native-vector-icons/AntDesign";
-import { scaleSize } from "../../../utils/ScreenUtil";
-import RepoDetail from "../../../components/RepoDetail";
+import { scaleSize } from "../../utils/ScreenUtils";
+import RepoDetail from "../../components/RepoDetail";
 
 const UserStack = createStackNavigator(
   {
