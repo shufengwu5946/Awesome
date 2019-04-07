@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
-import { scaleSize } from "../utils/ScreenUtils";
+import { scaleSize } from "~/utils/ScreenUtils";
 import getEvent from "./EventComponent";
+import FastImage from "react-native-fast-image";
 
 export default class ActivityListItem extends Component {
   render() {
@@ -9,9 +10,10 @@ export default class ActivityListItem extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.imageContainer}>
-          <Image
+          <FastImage
             style={styles.imageUrl}
             source={{ uri: item.actor.avatar_url }}
+            resizeMode={FastImage.resizeMode.contain}
             defaultSource={require("../assets/img/defaultImg.png")}
           />
           <Text style={styles.userName}>{item.actor.login}</Text>
@@ -54,8 +56,6 @@ const styles = StyleSheet.create({
     height: scaleSize(60),
     width: scaleSize(60),
     borderRadius: scaleSize(30),
-    borderWidth: scaleSize(1),
-    borderColor: "black"
   },
   userName: {
     fontSize: scaleSize(28),

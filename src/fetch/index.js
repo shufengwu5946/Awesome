@@ -39,20 +39,13 @@ function handleResponse(response) {
   throw new Error(`Sorry, content-type ${contentType} not supported`);
 }
 
-export function fetchLogin(url, userName, password, func, funcError) {
-  fetch(url, {
+export function fetchLogin(url, userName, password) {
+  return fetch(url, {
     method: "get",
     headers: {
       Authorization: `Basic ${Base64.encode(`${userName}:${password}`)}`
     }
-  })
-    .then(handleResponse)
-    .then(data => {
-      func(data);
-    })
-    .catch(error => {
-      funcError(error);
-    });
+  }).then(handleResponse);
 }
 
 export const fetchGetWithAuth = (url, userName, password, params) => {

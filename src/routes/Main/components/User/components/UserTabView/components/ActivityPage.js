@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { View, FlatList } from "react-native";
-import { fetchGetWithOutAuth } from "../../../../fetch/index";
-import { EVENTS_URL } from "../../../../constants/Fetch";
-import { LOGIN_DATA } from "../../../../constants/AsyncStorage";
-import toast from "../../../../utils/ToastUtils";
-import { scaleSize } from "../../../../utils/ScreenUtils";
-import ActivityListItem from "../../../../components/ActivityListItem";
-import { retrieveData } from "../../../../utils/AsyncStorageUtils";
+import ActivityListItem from "~/components/ActivityListItem";
+import toast from "~/utils/ToastUtils";
+import { retrieveData } from "~/utils/AsyncStorageUtils";
+import { fetchGetWithOutAuth } from "~/fetch";
+import { LOGIN_DATA } from "~/constants/AsyncStorage";
+import { EVENTS_URL } from "~/constants/Fetch";
+import { scaleSize } from "~/utils/ScreenUtils";
 
 class ActivityPage extends Component {
   constructor(props) {

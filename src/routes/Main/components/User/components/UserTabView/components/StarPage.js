@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import { View, FlatList } from "react-native";
-import { fetchGetWithAuth } from "../../../../fetch/index";
-import { STARRED_URL } from "../../../../constants/Fetch";
-import RepoListItem from "../../../../components/RepoListItem";
-import { PASSWORD, LOGIN_DATA } from "../../../../constants/AsyncStorage";
-import AsyncStorage from "@react-native-community/async-storage";
-import toast from "../../../../utils/ToastUtils";
-import { scaleSize } from "../../../../utils/ScreenUtils";
-import { retrieveData } from "../../../../utils/AsyncStorageUtils";
+import { fetchGetWithAuth } from "~/fetch/index";
+import { STARRED_URL } from "~/constants/Fetch";
+import RepoListItem from "~/components/RepoListItem";
+import { PASSWORD, LOGIN_DATA } from "~/constants/AsyncStorage";
+import toast from "~/utils/ToastUtils";
+import { scaleSize } from "~/utils/ScreenUtils";
+import { retrieveData } from "~/utils/AsyncStorageUtils";
 
 class StarPage extends Component {
   constructor(props) {

@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
-import { LOGIN_DATA } from "../../../constants/AsyncStorage";
-import { retrieveData } from "../../../utils/AsyncStorageUtils";
+import { LOGIN_DATA } from "~/constants/AsyncStorage";
+import { retrieveData } from "~/utils/AsyncStorageUtils";
 
 export default class StartPage extends React.Component {
   constructor(props) {

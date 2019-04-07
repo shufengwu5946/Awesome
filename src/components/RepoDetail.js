@@ -12,9 +12,9 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/AntDesign";
 // import { WebView } from 'react-native-webview';
-import { scaleSize } from "../utils/ScreenUtils";
-import { fetchGetReadme } from "../fetch";
-import { README_URL } from "../constants/Fetch";
+import { scaleSize } from "~/utils/ScreenUtils";
+import { fetchGetReadme } from "~/fetch";
+import { README_URL } from "~/constants/Fetch";
 // import { BoxShadow } from "react-native-shadow";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 
@@ -91,7 +91,7 @@ export default class RepoDetail extends Component {
           </Text>
           <Text style={styles.description}>{this.state.description}</Text>
         </View>
-        <TabView
+        {/* <TabView
           navigationState={this.state}
           renderScene={({ route, jumpTo }) => {
             switch (route.key) {
@@ -116,7 +116,8 @@ export default class RepoDetail extends Component {
               contentContainerStyle={{ height: scaleSize(100) }}
             />
           )}
-        />
+        /> */}
+        <RepoInfo readme={this.state.readme} />
       </ScrollView>
     );
   }

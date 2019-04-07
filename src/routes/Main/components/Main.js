@@ -1,7 +1,7 @@
 import React from "react";
-import { StyleSheet, Text, View, StatusBar } from "react-native";
-import { scaleSize } from "../../../utils/ScreenUtils";
-import User from "../../User/components/User";
+import { View, StatusBar } from "react-native";
+import User from "./User/components/User";
+import styles from "./MainStyles";
 
 export default class Main extends React.Component {
   static navigationOptions = {
@@ -21,13 +21,3 @@ export default class Main extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white"
-  },
-  content: {
-    fontSize: scaleSize(34)
-  }
-});

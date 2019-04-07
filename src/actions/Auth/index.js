@@ -4,18 +4,18 @@ import {
   LOGIN_START,
   SET_USER_NAME,
   SET_PASSWORD
-} from "../../constants/Actions";
-import { LOGIN_URL } from "../../constants/Fetch";
-import { fetchLogin } from "../../fetch/index";
-import { LOGIN_DATA, PASSWORD } from "../../constants/AsyncStorage";
-import { storeData } from "../../utils/AsyncStorageUtils";
-import toast from "../../utils/ToastUtils";
+} from "~/constants/Actions";
+import { LOGIN_URL } from "~/constants/Fetch";
+import { fetchLogin } from "~/fetch/index";
+import { LOGIN_DATA, PASSWORD } from "~/constants/AsyncStorage";
+import { storeData } from "~/utils/AsyncStorageUtils";
+import toast from "~/utils/ToastUtils";
 import {
   TOAST_USER_NAME_NOT_EMPTY,
   TOAST_PASSWORD_NOT_EMPTY,
   TOAST_LOGIN_SUCCESS,
   TOAST_LOGIN_FAIL
-} from "../../constants/Auth";
+} from "~/constants/Auth";
 
 export const setUserName = userName => ({
   type: SET_USER_NAME,
@@ -56,21 +56,17 @@ export const login = () => {
       return;
     }
     dispatch(loginStart(getState().userName, getState().password));
-    fetchLogin(
-      LOGIN_URL,
-      getState().userName,
-      getState().password,
-      data => {
+    fetchLogin(LOGIN_URL, getState().userName, getState().password)
+      .then(data => {
         toast(TOAST_LOGIN_SUCCESS);
         dispatch(loginSuccess(getState().userName, getState().password));
         storeData(LOGIN_DATA, JSON.stringify(data));
         storeData(PASSWORD, getState().password);
-      },
-      () => {
+      })
+      .catch(() => {
         toast(TOAST_LOGIN_FAIL);
         dispatch(loginFail());
-      }
-    );
+      });
   };
   return func;
 };

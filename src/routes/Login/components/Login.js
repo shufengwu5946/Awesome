@@ -1,17 +1,11 @@
 import React from "react";
-import { StyleSheet, Text, View, StatusBar } from "react-native";
-import { scaleSize } from "../../../utils/ScreenUtils";
+import { Text, View, StatusBar } from "react-native";
+import { scaleSize } from "~/utils/ScreenUtils";
 import { Button, InputItem } from "@ant-design/react-native";
-import {
-  setUserName as setUser,
-  setPassword as setPass,
-  login
-} from "../../../actions/Auth";
-import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/AntDesign";
+import styles from "./LoginStyles";
 
-class Login extends React.Component {
-
+export default class Login extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -28,9 +22,9 @@ class Login extends React.Component {
         <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
         <Icon
           name="github"
-          color = "green"
-          size = {scaleSize(200)}
-          style = {styles.logo}
+          color="green"
+          size={scaleSize(200)}
+          style={styles.logo}
         />
 
         <InputItem
@@ -72,57 +66,3 @@ class Login extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#FFFFFF",
-    paddingLeft: scaleSize(50),
-    paddingRight: scaleSize(50)
-  },
-  logo: {
-    marginBottom:scaleSize(100)
-  },
-  inputItem: {
-    fontSize: scaleSize(34),
-    alignItems: "center",
-    height: scaleSize(80)
-  },
-  inputItemLabel: {
-    fontSize: scaleSize(34),
-    alignItems: "center",
-    lineHeight: scaleSize(80),
-    height: scaleSize(80)
-  },
-  loginButton: {
-    marginTop: scaleSize(50),
-    height: scaleSize(80),
-    width: scaleSize(300)
-  }
-});
-
-const mapStateToProps = state => ({
-  userName: state.userName,
-  password: state.password,
-  loading: state.loading,
-  loginSuccStatus: state.loginSuccStatus
-});
-
-const mapDispatchToProps = dispatch => ({
-  setUserName: userName => {
-    dispatch(setUser(userName));
-  },
-  setPassword: password => {
-    dispatch(setPass(password));
-  },
-  handlePress: () => {
-    dispatch(login());
-  }
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Login);
