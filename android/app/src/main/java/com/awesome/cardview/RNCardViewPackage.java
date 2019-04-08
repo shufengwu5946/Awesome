@@ -1,4 +1,4 @@
-package com.awesome.markdown;
+package com.awesome.cardview;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;
@@ -11,16 +11,16 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-public class TextViewPackage implements ReactPackage {
+public class RNCardViewPackage implements ReactPackage {
     @Nonnull
     @Override
     public List<NativeModule> createNativeModules(@Nonnull ReactApplicationContext reactContext) {
-        return Collections.emptyList();
+        return Arrays.<NativeModule>asList(new RNCardViewModule(reactContext));
     }
 
     @Nonnull
     @Override
     public List<ViewManager> createViewManagers(@Nonnull ReactApplicationContext reactContext) {
-        return Arrays.<ViewManager>asList(new TextViewManager());
+        return Arrays.<ViewManager>asList(new RNCardViewManager());
     }
 }

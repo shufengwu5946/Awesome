@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
     height: scaleSize(60),
     width: scaleSize(60),
     borderRadius: scaleSize(30),
+    backgroundColor: "#EEEEEE"
   },
   userName: {
     fontSize: scaleSize(28),

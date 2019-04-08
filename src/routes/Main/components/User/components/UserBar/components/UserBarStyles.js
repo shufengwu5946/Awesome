@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   avatar: {
     width: scaleSize(160),
     height: scaleSize(160),
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#EEEEEE",
     borderRadius: scaleSize(80)
   },
   userInfo: {

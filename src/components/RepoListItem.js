@@ -37,7 +37,7 @@ export default class RepoListItem extends Component {
             style={styles.imageUrl}
             source={{ uri: imageUrl }}
             resizeMode={FastImage.resizeMode.contain}
-            defaultSource={require('../assets/img/defaultImg.png')}
+            defaultSource={require("../assets/img/defaultImg.png")}
           />
           <View>
             <View style={styles.contentTitle}>
@@ -80,7 +80,8 @@ const styles = StyleSheet.create({
     width: scaleSize(100),
     marginLeft: scaleSize(10),
     marginTop: scaleSize(10),
-    borderRadius: scaleSize(50)
+    borderRadius: scaleSize(50),
+    backgroundColor: "#EEEEEE"
   },
   contentTitle: {
     flexDirection: "row"

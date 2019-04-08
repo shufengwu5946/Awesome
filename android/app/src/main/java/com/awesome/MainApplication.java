@@ -2,7 +2,7 @@ package com.awesome;
 
 import android.app.Application;
 
-import com.awesome.markdown.TextViewPackage;
+import com.awesome.cardview.RNCardViewPackage;
 import com.facebook.react.ReactApplication;
 import com.dylanvann.fastimage.FastImageViewPackage;
 import com.horcrux.svg.SvgPackage;
@@ -36,7 +36,7 @@ public class MainApplication extends Application implements ReactApplication {
                     new VectorIconsPackage(),
                     new AsyncStoragePackage(),
                     new RNGestureHandlerPackage(),
-                    new TextViewPackage()
+                    new RNCardViewPackage()
             );
         }
 
