@@ -22,8 +22,8 @@ export default class ReactPage extends Component {
           paddingLeft={scaleSize(20)}
           paddingRight={scaleSize(20)}
           radius={scaleSize(20)}
-          minimumWidth={scaleSize(200)}
-          minimumHeight={scaleSize(200)}
+          cardBackgroundColor="yellow"
+          cardElevation={scaleSize(10)}
         >
           <Text>ReactPage</Text>
         </CardView>
