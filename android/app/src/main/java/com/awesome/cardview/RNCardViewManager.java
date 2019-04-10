@@ -61,11 +61,6 @@ public class RNCardViewManager extends ViewGroupManager<CardView> {
         view.setMinimumHeight((int) PixelUtil.toPixelFromDIP(minHeight));
     }
 
-    @ReactProp(name = "cardBackgroundColor")
-    public void setCardBackgroundColor(CardView view, String color) {
-        view.setCardBackgroundColor(Color.parseColor(color));
-    }
-
     @ReactProp(name = "radius", defaultFloat = 0f)
     public void setRadius(CardView view, float radius) {
         view.setRadius(PixelUtil.toPixelFromDIP(radius));

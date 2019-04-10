@@ -48,25 +48,25 @@ export default class InfoPage extends Component {
           }}
           cardElevation={scaleSize(5)}
         >
-          <View style={styles.container>
-            <Text>{this.state.name}</Text>
-            <View>
-                <View>
-                    <Text>1</Text>
-                    <Text>跟随者</Text>
-                </View>
-                <View>
-                <Text><1/Text>
-                    <Text>跟随</Text>
-                </View>
-                <View>
-                <Text>1</Text>
-                    <Text>版本库</Text>
-                </View>
-                <View>
-                <Text>1</Text>
-                    <Text>主题帖</Text>
-                </View>
+          <View style={styles.container}>
+            <Text style={styles.name}>{this.state.name}</Text>
+            <View style={styles.list}>
+              <View style={styles.listItem}>
+                <Text style={styles.listItemCount}>1</Text>
+                <Text style={styles.listItemText}>跟随者</Text>
+              </View>
+              <View style={styles.listItem}>
+                <Text style={styles.listItemCount}>1</Text>
+                <Text style={styles.listItemText}>跟随</Text>
+              </View>
+              <View style={styles.listItem}>
+                <Text style={styles.listItemCount}>1</Text>
+                <Text style={styles.listItemText}>版本库</Text>
+              </View>
+              <View style={styles.listItem}>
+                <Text style={styles.listItemCount}>1</Text>
+                <Text style={styles.listItemText}>主题帖</Text>
+              </View>
             </View>
           </View>
         </CardView>
