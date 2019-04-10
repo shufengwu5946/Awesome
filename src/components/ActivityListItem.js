@@ -3,46 +3,55 @@ import { StyleSheet, View, Text, Image } from "react-native";
 import { scaleSize } from "~/utils/ScreenUtils";
 import getEvent from "./EventComponent";
 import FastImage from "react-native-fast-image";
+import CardView from "~/components/RNCardView.android";
+import utc2beijing from "../utils/TimeUtils";
 
 export default class ActivityListItem extends Component {
   render() {
     const { item } = this.props;
     return (
-      <View style={styles.container}>
-        <View style={styles.imageContainer}>
-          <FastImage
-            style={styles.imageUrl}
-            source={{ uri: item.actor.avatar_url }}
-            resizeMode={FastImage.resizeMode.contain}
-            defaultSource={require("../assets/img/defaultImg.png")}
-          />
-          <Text style={styles.userName}>{item.actor.login}</Text>
-          <Text style={styles.time}>{item.created_at}</Text>
+      <CardView
+        style={{
+          marginTop: scaleSize(10),
+          marginLeft: scaleSize(10),
+          marginRight: scaleSize(10),
+          marginBottom: scaleSize(10)
+        }}
+        cardElevation={scaleSize(5)}
+      >
+        <View style={styles.container}>
+          <View style={styles.imageContainer}>
+            <FastImage
+              style={styles.imageUrl}
+              source={{ uri: item.actor.avatar_url }}
+              resizeMode={FastImage.resizeMode.contain}
+              defaultSource={require("../assets/img/defaultImg.png")}
+            />
+            <Text style={styles.userName}>{item.actor.login}</Text>
+            <Text style={styles.time}>{utc2beijing(item.created_at)}</Text>
+          </View>
+          <View style={styles.event}>
+            {getEvent(
+              item.actor.login,
+              item.type,
+              item.repo.name,
+              item.payload.ref_type,
+              item.payload.ref,
+              item.payload.release ? item.payload.release.tag_name : "",
+              item.payload.action
+            )}
+          </View>
         </View>
-        <View style={styles.event}>
-          {getEvent(
-            item.actor.login,
-            item.type,
-            item.repo.name,
-            item.payload.ref_type,
-            item.payload.ref,
-            item.payload.release ? item.payload.release.tag_name : "",
-            item.payload.action
-          )}
-        </View>
-      </View>
+      </CardView>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    marginLeft: scaleSize(10),
-    marginRight: scaleSize(10),
-    marginBottom: scaleSize(10),
-    marginTop: scaleSize(10),
     flexDirection: "column",
-    borderWidth: scaleSize(1)
+    borderWidth: scaleSize(1),
+    borderColor: "white"
   },
   imageContainer: {
     marginLeft: scaleSize(20),

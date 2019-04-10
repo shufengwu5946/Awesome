@@ -58,24 +58,19 @@ public class RNCardViewManager extends ViewGroupManager<CardView> {
         view.setMinimumHeight((int) PixelUtil.toPixelFromDIP(minHeight));
     }
 
-//    @ReactProp(name = "cardBackgroundColor", defaultInt = Color.WHITE)
-//    public void setCardBackgroundColor(CardView view, float bottom) {
-//        view.setCardBackgroundColor(view.getContentPaddingLeft(), view.getContentPaddingTop(), view.getContentPaddingRight(), (int) PixelUtil.toPixelFromDIP(bottom));
-//    }
+    @ReactProp(name = "cardBackgroundColor")
+    public void setCardBackgroundColor(CardView view, String color) {
+        view.setCardBackgroundColor(Color.parseColor(color));
+    }
 
     @ReactProp(name = "radius", defaultFloat = 0f)
     public void setRadius(CardView view, float radius) {
         view.setRadius(PixelUtil.toPixelFromDIP(radius));
     }
 
-//    @ReactProp(name = "paddingBottom", defaultFloat = 0f)
-//    public void setCardElevation(CardView view, float bottom) {
-//        view.setCardElevation(view.getContentPaddingLeft(), view.getContentPaddingTop(), view.getContentPaddingRight(), (int) PixelUtil.toPixelFromDIP(bottom));
-//    }
-//
-//    @ReactProp(name = "paddingBottom", defaultFloat = 0f)
-//    public void setPreventCornerOverlap(CardView view, float bottom) {
-//        view.setPreventCornerOverlap(view.getContentPaddingLeft(), view.getContentPaddingTop(), view.getContentPaddingRight(), (int) PixelUtil.toPixelFromDIP(bottom));
-//    }
+    @ReactProp(name = "cardElevation", defaultFloat = 0f)
+    public void setCardElevation(CardView view, float elevation) {
+        view.setCardElevation(PixelUtil.toPixelFromDIP(elevation));
+    }
 
 }

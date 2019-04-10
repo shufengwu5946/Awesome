@@ -7,6 +7,7 @@ import { fetchGetWithOutAuth } from "~/fetch";
 import { LOGIN_DATA } from "~/constants/AsyncStorage";
 import { EVENTS_URL } from "~/constants/Fetch";
 import { scaleSize } from "~/utils/ScreenUtils";
+// import CardView from "~/components/RNCardView.android";
 
 class ActivityPage extends Component {
   constructor(props) {

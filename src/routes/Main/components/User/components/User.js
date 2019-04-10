@@ -3,9 +3,9 @@ import { View } from "react-native";
 import UserBar from "./UserBar/components/UserBar";
 import UserTabView from "./UserTabView/components/UserTabView";
 import StarPage from "./UserTabView/components/StarPage";
-import ReactPage from "./UserTabView/components/ReactPage";
 import ActivityPage from "./UserTabView/components/ActivityPage";
 import styles from "./UserStyles";
+import InfoPage from "./UserTabView/components/InfoPage"
 
 export default class User extends Component {
   constructor(props) {
@@ -23,13 +23,13 @@ export default class User extends Component {
     const routes = [
       { key: "stars", title: "星标" },
       { key: "activity", title: "活动" },
-      { key: "third", title: "Third" }
+      { key: "third", title: "信息" }
     ];
 
     const scenes = {
       stars: StarPage,
       activity: ActivityPage,
-      third: ReactPage
+      third: InfoPage
     };
 
     return (
