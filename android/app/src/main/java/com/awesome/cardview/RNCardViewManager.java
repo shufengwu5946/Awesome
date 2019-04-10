@@ -2,11 +2,13 @@ package com.awesome.cardview;
 
 import android.graphics.Color;
 import android.support.v7.widget.CardView;
+import android.view.View;
 
 import com.facebook.react.uimanager.PixelUtil;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.ViewGroupManager;
 import com.facebook.react.uimanager.annotations.ReactProp;
+import com.facebook.react.views.view.ReactViewGroup;
 
 import javax.annotation.Nonnull;
 
@@ -25,6 +27,7 @@ public class RNCardViewManager extends ViewGroupManager<CardView> {
     protected CardView createViewInstance(@Nonnull ThemedReactContext reactContext) {
         this.mContext = reactContext;
         CardView cardView = new CardView(reactContext);
+        cardView.setPreventCornerOverlap(true);
         return cardView;
     }
 
@@ -48,9 +51,9 @@ public class RNCardViewManager extends ViewGroupManager<CardView> {
         view.setContentPadding(view.getContentPaddingLeft(), view.getContentPaddingTop(), view.getContentPaddingRight(), (int) PixelUtil.toPixelFromDIP(bottom));
     }
 
-    @ReactProp(name = "minimumWidth", defaultFloat = 0f)
-    public void setMinimumWidth(CardView view, float minWidth) {
-        view.setMinimumWidth((int) PixelUtil.toPixelFromDIP(minWidth));
+    @ReactProp(name = "cardBackgroundColor")
+    public void setCardBackgroundColor(CardView view, String color) {
+        view.setCardBackgroundColor(Color.parseColor(color));
     }
 
     @ReactProp(name = "minimumHeight", defaultFloat = 0f)
