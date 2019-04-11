@@ -21,7 +21,10 @@ import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 export default class RepoDetail extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: navigation.getParam("title", "").substring(0, 14) + "...",
+      title:
+        navigation.getParam("title", "").length > 14
+          ? navigation.getParam("title", "").substring(0, 14) + "..."
+          : navigation.getParam("title", ""),
       headerRight: (
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <TouchableNativeFeedback>

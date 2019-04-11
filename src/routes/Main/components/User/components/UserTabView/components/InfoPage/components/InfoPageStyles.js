@@ -17,20 +17,22 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginLeft: scaleSize(40),
     marginRight: scaleSize(40),
-    marginTop: scaleSize(40)
+    marginTop: scaleSize(40),
+    marginBottom: scaleSize(40)
   },
   listItem: {
     flexGrow: 1,
-    alignItems: 'stretch',
-  }
-  ,
+    alignItems: "stretch"
+  },
   listItemText: {
     color: "gray",
-    fontSize: scaleSize(24)
+    fontSize: scaleSize(24),
+    textAlign: "center"
   },
   listItemCount: {
     color: "gray",
-    fontSize: scaleSize(38)
+    fontSize: scaleSize(36),
+    textAlign: "center"
   }
 });
 

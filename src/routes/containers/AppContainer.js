@@ -12,6 +12,7 @@ import Icon from "react-native-vector-icons/AntDesign";
 import { scaleSize } from "~/utils/ScreenUtils";
 import RepoDetail from "~/components/RepoDetail";
 import Trends from "../Trends";
+import RepoListPage from "../../components/RepoListPage/components/RepoListPage";
 
 const UserStack = createStackNavigator(
   {
@@ -84,7 +85,8 @@ const LoginSwitch = createSwitchNavigator(
 const StartStatck = createStackNavigator(
   {
     LoginSwitch: LoginSwitch,
-    RepoDetail: RepoDetail
+    RepoListPage:RepoListPage,
+    RepoDetail: RepoDetail,
   },
   {
     navigationOptions: {
