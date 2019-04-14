@@ -81,7 +81,7 @@
 // }
 
 import React, { Component } from "react";
-import { View, FlatList,TouchableNativeFeedback } from "react-native";
+import { View, FlatList, TouchableNativeFeedback } from "react-native";
 import RepoListItem from "~/components/RepoListItem";
 import { PASSWORD, LOGIN_DATA } from "~/constants/AsyncStorage";
 import toast from "~/utils/ToastUtils";
@@ -90,6 +90,30 @@ import { retrieveData } from "~/utils/AsyncStorageUtils";
 import { REPOS_URL } from "~/constants/Fetch";
 import { fetchGetWithOutAuth } from "~/fetch";
 import Icon from "react-native-vector-icons/AntDesign";
+
+import withRefreshList from "~/hocs/withRefreshList";
+
+const listItemFunc = ({ item }) => (
+  <RepoListItem
+    title={item.name}
+    imageUrl={item.owner.avatar_url}
+    language={item.language}
+    description={item.description}
+    author={item.owner.login}
+    starNumber={item.stargazers_count}
+    forkNumber={item.forks_count}
+    size={item.size}
+  />
+);
+
+const fetchFunc = aimPage =>
+  retrieveData([LOGIN_DATA]).then(datas => {
+    return fetchGetWithOutAuth(REPOS_URL(JSON.parse(datas[0]).login), {
+      page: aimPage
+    });
+  });
+
+const RepoList = withRefreshList(listItemFunc, fetchFunc);
 
 class RepoListPage extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -110,93 +134,10 @@ class RepoListPage extends Component {
     };
   };
 
-  constructor(props) {
-    super(props);
-    const data = [];
-    this.state = { data: data, refreshing: true, page: 1 };
-  }
-
-  componentDidMount() {
-    this.setState({ page: 1, refreshing: true }, () => {
-      this.getRepoList(true);
-    });
-  }
-
-  handleRefresh() {
-    this.setState({ page: 1, refreshing: true }, () => {
-      this.getRepoList(true);
-    });
-  }
-
-  handleEndReached() {
-    this.setState({ page: this.state.page + 1, refreshing: true }, () => {
-      this.getRepoList(false);
-    });
-  }
-
-  // onItemPress() {
-  //   this.context.navigate("RepoDetail");
-  // }
-
   render() {
     return (
-      <View>
-        <FlatList
-          showsVerticalScrollIndicator={false}
-          data={this.state.data}
-          renderItem={({ item }) => (
-            <RepoListItem
-              title={item.name}
-              imageUrl={item.owner.avatar_url}
-              language={item.language}
-              description={item.description}
-              author={item.owner.login}
-              starNumber={item.stargazers_count}
-              forkNumber={item.forks_count}
-              size={item.size}
-            />
-          )}
-          onRefresh={() => this.handleRefresh()}
-          refreshing={this.state.refreshing}
-          keyExtractor={(item, index) => index.toString()}
-          onEndReached={() => this.handleEndReached()}
-          onEndReachedThreshold={scaleSize(1)}
-        />
-      </View>
+      <RepoList/>
     );
-  }
-
-  getRepoList(isRefresh) {
-    retrieveData([LOGIN_DATA])
-      .then(datas => {
-        return fetchGetWithOutAuth(REPOS_URL(JSON.parse(datas[0]).login), {
-          page: this.state.page
-        });
-      })
-      .then(data => {
-        console.log(data);
-
-        if (isRefresh) {
-          this.setState({ data: data, refreshing: false });
-        } else {
-          this.setState(
-            {
-              data: [...this.state.data, ...data],
-              refreshing: false
-            },
-            () => {
-              if (data.length === 0) {
-                toast("没有更多数据了！");
-                this.setState({ page: this.state.page - 1 });
-              }
-            }
-          );
-        }
-      })
-      .catch(error => {
-        this.setState({ refreshing: false });
-        console.log(error);
-      });
   }
 }
 

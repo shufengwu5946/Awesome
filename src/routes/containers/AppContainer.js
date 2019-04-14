@@ -13,10 +13,11 @@ import { scaleSize } from "~/utils/ScreenUtils";
 import RepoDetail from "~/components/RepoDetail";
 import Trends from "../Trends";
 import RepoListPage from "../../components/RepoListPage/components/RepoListPage";
+import FollowerListPage from "../../components/FollowerListPage/components/FollowerListPage";
 
 const UserStack = createStackNavigator(
   {
-    Main: Main,
+    Main: Main
   },
   {
     initialRouteName: "Main"
@@ -85,8 +86,9 @@ const LoginSwitch = createSwitchNavigator(
 const StartStatck = createStackNavigator(
   {
     LoginSwitch: LoginSwitch,
-    RepoListPage:RepoListPage,
-    RepoDetail: RepoDetail,
+    RepoListPage: RepoListPage,
+    FollowerListPage: FollowerListPage,
+    RepoDetail: RepoDetail
   },
   {
     navigationOptions: {

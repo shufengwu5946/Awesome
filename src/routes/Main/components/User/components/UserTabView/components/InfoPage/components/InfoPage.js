@@ -49,16 +49,13 @@ export default class InfoPage extends Component {
   _onPress(itemText) {
     switch (itemText) {
       case "跟随者":
-        Alert.alert("跟随者");
+      NavigationService.navigate("FollowerListPage");
         break;
       case "跟随":
         Alert.alert("跟随");
         break;
       case "版本库":
         NavigationService.navigate("RepoListPage");
-        break;
-      case "主题帖":
-        Alert.alert("主题帖");
         break;
       default:
         break;
@@ -94,11 +91,6 @@ export default class InfoPage extends Component {
                 itemCount={this.state.public_repos}
                 itemText={"版本库"}
                 _onPress={this._onPress.bind(this, "版本库")}
-              />
-              <ListItem
-                itemCount={this.state.public_gists}
-                itemText={"主题帖"}
-                _onPress={this._onPress.bind(this, "主题帖")}
               />
             </View>
           </View>
