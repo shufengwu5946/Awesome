@@ -1,10 +1,10 @@
-import { connect } from "react-redux";
-import InfoPage from "../components/InfoPage";
 import {
   setRepoListType as setType,
   setRepoListSort as setSort,
   setRepoListTypeItems as setTypeItems
 } from "~/actions/Repo";
+import { connect } from "react-redux";
+import RepoListMenuList from "../components/RepoListMenuList";
 
 const mapStateToProps = state => ({
   repoListType: state.repoListType,
@@ -27,4 +27,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(InfoPage);
+)(RepoListMenuList);

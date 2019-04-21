@@ -156,25 +156,6 @@ export default function withRefreshList(listItemFunc, fetchFunc) {
                 loadMoreFinish: false
               });
             }
-            // this.setState(
-            //   {
-            //     data: [...this.state.data, ...data],
-            //     refreshing: false
-            //   },
-            //   () => {
-            //     if (data.length === 0) {
-            //       //toast("没有更多数据了！");
-            //       this.setState({
-            //         page: this.state.page - 1,
-            //         loadMoreFinish: true
-            //       });
-            //     } else {
-            //       this.setState({
-            //         loadMoreFinish: false
-            //       });
-            //     }
-            //   }
-            // );
           }
         })
         .catch(error => {

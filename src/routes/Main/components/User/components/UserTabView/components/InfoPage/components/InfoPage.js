@@ -14,7 +14,8 @@ import CardView from "~/components/RNCardView.android";
 import { retrieveData } from "~/utils/AsyncStorageUtils";
 import { LOGIN_DATA } from "~/constants/AsyncStorage";
 import NavigationService from "~/routes/containers/NavigationService";
-import RepoListPage from "../../../../../../../../../components/RepoListPage/components/RepoListPage";
+import RepoListPage from "~/components/RepoListPage/components/RepoListPage";
+import { myTypeArray } from "~/constants/User/Info/Repo";
 
 export default class InfoPage extends Component {
   constructor(props) {
@@ -49,12 +50,15 @@ export default class InfoPage extends Component {
   _onPress(itemText) {
     switch (itemText) {
       case "跟随者":
-      NavigationService.navigate("FollowerListPage");
+        NavigationService.navigate("FollowerListPage");
         break;
       case "跟随":
         Alert.alert("跟随");
         break;
       case "版本库":
+        this.props.setRepoListType("全部");
+        this.props.setRepoListSort("名称升序");
+        this.props.setRepoListTypeItems(myTypeArray);
         NavigationService.navigate("RepoListPage");
         break;
       default:
