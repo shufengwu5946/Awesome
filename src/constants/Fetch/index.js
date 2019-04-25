@@ -8,3 +8,4 @@ export const REPOS_URL = author =>
   `https://api.github.com/users/${author}/repos`;
 export const FOLLOWERS_URL = author =>
   `https://api.github.com/users/${author}/followers`;
+export const AUTHORIZATIONS_URL = "https://api.github.com/authorizations";

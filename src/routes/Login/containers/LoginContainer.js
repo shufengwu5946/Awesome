@@ -5,6 +5,7 @@ import {
 } from "~/actions/Auth";
 import { connect } from "react-redux";
 import Login from "../components/Login";
+import { authorizations } from "../../../actions/Auth";
 
 const mapStateToProps = state => ({
   userName: state.userName,

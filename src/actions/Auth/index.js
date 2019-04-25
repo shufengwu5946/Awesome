@@ -15,8 +15,16 @@ import {
   TOAST_LOGIN_SUCCESS,
   TOAST_LOGIN_FAIL
 } from "~/constants/Auth";
-import { fetchGet } from "../../fetch";
+import { fetchGet, fetchPost } from "../../fetch";
 import { Base64 } from "js-base64";
+import { AUTHORIZATIONS_URL } from "../../constants/Fetch";
+import {
+  AUTH_SCOPES,
+  AUTH_NOTE,
+  AUTH_NOTE_URL,
+  AUTH_CLIENT_ID,
+  AUTH_CLIENT_SECRET
+} from "../../constants/Auth";
 
 export const setUserName = userName => ({
   type: SET_USER_NAME,
@@ -81,5 +89,36 @@ export const login = () => {
 };
 
 export const authorizations = () => {
-  return (dispatch, getState) => {};
+  const func = (dispatch, getState) => {
+    if (getState().userName.length == 0) {
+      toast(TOAST_USER_NAME_NOT_EMPTY);
+      return;
+    }
+    if (getState().password.length === 0) {
+      toast(TOAST_PASSWORD_NOT_EMPTY);
+      return;
+    }
+    dispatch(loginStart(getState().userName, getState().password));
+    fetchPost(
+      AUTHORIZATIONS_URL,
+      {
+        Authorization: `Basic ${Base64.encode(
+          `${getState().userName}:${getState().password}`
+        )}`,
+        Accept: "application/json"
+      },
+      {
+        scopes: AUTH_SCOPES,
+        note: AUTH_NOTE,
+        note_url: AUTH_NOTE_URL,
+        client_id: AUTH_CLIENT_ID,
+        client_secret: AUTH_CLIENT_SECRET
+      }
+    )
+      .then(data => {
+        console.log(data);
+      })
+      .catch(() => {});
+  };
+  return func;
 };
