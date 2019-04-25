@@ -5900,6 +5900,11 @@ react-native-collapsible@^1.4.0:
   dependencies:
     prop-types "^15.6.2"
 
+react-native-config@^0.11.7:
+  version "0.11.7"
+  resolved "https://registry.npm.taobao.org/react-native-config/download/react-native-config-0.11.7.tgz#a2b323f2ecd76a4df88cbb6bc86eaa2ef9febee7"
+  integrity sha1-orMj8uzXak34jLtryG6qLvn+vuc=
+
 react-native-drawer-layout@^2.0.0:
   version "2.0.0"
   resolved "http://registry.npm.taobao.org/react-native-drawer-layout/download/react-native-drawer-layout-2.0.0.tgz#8ce1e4027bd3f3a09045afdb46080e18346be232"

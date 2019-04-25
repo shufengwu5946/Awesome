@@ -13,10 +13,10 @@ import {
 import Icon from "react-native-vector-icons/AntDesign";
 // import { WebView } from 'react-native-webview';
 import { scaleSize } from "~/utils/ScreenUtils";
-import { fetchGetReadme } from "~/fetch";
 import { README_URL } from "~/constants/Fetch";
 // import { BoxShadow } from "react-native-shadow";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
+import { fetchGet } from "../fetch";
 
 export default class RepoDetail extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -74,7 +74,11 @@ export default class RepoDetail extends Component {
   }
 
   componentDidMount() {
-    fetchGetReadme(README_URL(this.state.title, this.state.author), {})
+    fetchGet(
+      README_URL(this.state.title, this.state.author),
+      { Accept: "application/vnd.github.VERSION.html" },
+      {}
+    )
       .then(data => {
         this.setState({
           readme: data,

@@ -6,7 +6,6 @@ import {
   SET_PASSWORD
 } from "~/constants/Actions";
 import { LOGIN_URL } from "~/constants/Fetch";
-import { fetchLogin } from "~/fetch/index";
 import { LOGIN_DATA, PASSWORD } from "~/constants/AsyncStorage";
 import { storeData } from "~/utils/AsyncStorageUtils";
 import toast from "~/utils/ToastUtils";
@@ -16,6 +15,8 @@ import {
   TOAST_LOGIN_SUCCESS,
   TOAST_LOGIN_FAIL
 } from "~/constants/Auth";
+import { fetchGet } from "../../fetch";
+import { Base64 } from "js-base64";
 
 export const setUserName = userName => ({
   type: SET_USER_NAME,
@@ -56,7 +57,15 @@ export const login = () => {
       return;
     }
     dispatch(loginStart(getState().userName, getState().password));
-    fetchLogin(LOGIN_URL, getState().userName, getState().password)
+    fetchGet(
+      LOGIN_URL,
+      {
+        Authorization: `Basic ${Base64.encode(
+          `${getState().userName}:${getState().password}`
+        )}`
+      },
+      {}
+    )
       .then(data => {
         toast(TOAST_LOGIN_SUCCESS);
         dispatch(loginSuccess(getState().userName, getState().password));
@@ -69,4 +78,8 @@ export const login = () => {
       });
   };
   return func;
+};
+
+export const authorizations = () => {
+  return (dispatch, getState) => {};
 };

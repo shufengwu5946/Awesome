@@ -6,20 +6,24 @@ import toast from "~/utils/ToastUtils";
 import { scaleSize } from "~/utils/ScreenUtils";
 import { retrieveData } from "~/utils/AsyncStorageUtils";
 import { FOLLOWERS_URL } from "~/constants/Fetch";
-import { fetchGetWithOutAuth } from "~/fetch";
 import Icon from "react-native-vector-icons/AntDesign";
 
 import withRefreshList from "~/hocs/withRefreshList";
+import { fetchGet } from "../../../fetch";
 
 const listItemFunc = ({ item }) => (
-  <FollowerListItem imageUrl={item.avatar_url} author={item.login}/>
+  <FollowerListItem imageUrl={item.avatar_url} author={item.login} />
 );
 
 const fetchFunc = aimPage =>
   retrieveData([LOGIN_DATA]).then(datas => {
-    return fetchGetWithOutAuth(FOLLOWERS_URL(JSON.parse(datas[0]).login), {
-      page: aimPage
-    });
+    return fetchGet(
+      FOLLOWERS_URL(JSON.parse(datas[0]).login),
+      {},
+      {
+        page: aimPage
+      }
+    );
   });
 
 const FollowerList = withRefreshList(listItemFunc, fetchFunc);

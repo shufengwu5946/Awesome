@@ -39,54 +39,23 @@ function handleResponse(response) {
   throw new Error(`Sorry, content-type ${contentType} not supported`);
 }
 
-export function fetchLogin(url, userName, password) {
+export const fetchGet = (url, headers, params) => {
+  let paramArr = [];
+  Object.keys(params).forEach(function(key) {
+    paramArr.push(`${key}=${params[key]}`);
+  });
+  console.log(`${url}?${paramArr.join("&")}`);
+
+  return fetch(`${url}?${paramArr.join("&")}`, {
+    method: "get",
+    headers: headers
+  }).then(handleResponse);
+};
+
+export const fetchPost = (url, headers, body) => {
   return fetch(url, {
-    method: "get",
-    headers: {
-      Authorization: `Basic ${Base64.encode(`${userName}:${password}`)}`
-    }
-  }).then(handleResponse);
-}
-
-export const fetchGetWithAuth = (url, userName, password, params) => {
-  let paramArr = [];
-  Object.keys(params).forEach(function(key) {
-    paramArr.push(`${key}=${params[key]}`);
-  });
-  console.log(`${url}?${paramArr.join("&")}`);
-
-  return fetch(`${url}?${paramArr.join("&")}`, {
-    method: "get",
-    headers: {
-      Authorization: `Basic ${Base64.encode(`${userName}:${password}`)}`
-    }
-  }).then(handleResponse);
-};
-
-export const fetchGetWithOutAuth = (url, params) => {
-  let paramArr = [];
-  Object.keys(params).forEach(function(key) {
-    paramArr.push(`${key}=${params[key]}`);
-  });
-  console.log(`${url}?${paramArr.join("&")}`);
-
-  return fetch(`${url}?${paramArr.join("&")}`, {
-    method: "get",
-    headers: {}
-  }).then(handleResponse);
-};
-
-export const fetchGetReadme = (url, params) => {
-  let paramArr = [];
-  Object.keys(params).forEach(function(key) {
-    paramArr.push(`${key}=${params[key]}`);
-  });
-  console.log(`${url}?${paramArr.join("&")}`);
-
-  return fetch(`${url}?${paramArr.join("&")}`, {
-    method: "get",
-    headers: {
-      Accept: "application/vnd.github.VERSION.html"
-    }
+    method: "post",
+    headers: headers,
+    body: JSON.stringify(body)
   }).then(handleResponse);
 };
