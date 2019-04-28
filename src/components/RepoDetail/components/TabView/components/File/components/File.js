@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import {
-  View,
-  Text,
-} from "react-native";
+import { View, Text } from "react-native";
+import FileExplorer from "../../../../../../FileExplorer";
 
 export default class File extends Component {
   constructor(props) {
@@ -13,7 +11,9 @@ export default class File extends Component {
 
   render() {
     return (
-      <View><Text>File</Text></View>
+      <View>
+        <FileExplorer />
+      </View>
     );
   }
 }

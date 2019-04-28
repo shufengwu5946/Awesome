@@ -1,19 +1,11 @@
 import React, { Component } from "react";
 import {
-  StyleSheet,
   View,
   Text,
-  Image,
   ScrollView,
-  Linking,
-  WebView,
-  TouchableNativeFeedback,
-  Dimensions
+  WebView
 } from "react-native";
-import Icon from "react-native-vector-icons/AntDesign";
-import { scaleSize } from "~/utils/ScreenUtils";
 import { README_URL } from "~/constants/Fetch";
-import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import { fetchGet } from "~/fetch";
 import styles from "./InfoStyles";
 
