@@ -44,8 +44,6 @@ export const fetchGet = (url, headers, params) => {
   Object.keys(params).forEach(function(key) {
     paramArr.push(`${key}=${params[key]}`);
   });
-  console.log(`${url}?${paramArr.join("&")}`);
-
   return fetch(`${url}?${paramArr.join("&")}`, {
     method: "get",
     headers: headers

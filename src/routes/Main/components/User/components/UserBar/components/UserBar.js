@@ -9,38 +9,26 @@ import FastImage from "react-native-fast-image";
 export default class UserBar extends Component {
   constructor(props) {
     super(props);
-    this.state = { avatarUrl: "", name: "", joinDate: "" };
   }
 
   componentDidMount() {
-    retrieveData([LOGIN_DATA])
-      .then(datas => {
-        console.log(JSON.parse(datas[0]).created_at);
-        if (datas[0]) {
-          this.setState({
-            avatarUrl: JSON.parse(datas[0]).avatar_url,
-            name: JSON.parse(datas[0]).login,
-            joinDate: JSON.parse(datas[0]).created_at
-          });
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    this.props.getUserInfo();
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <FastImage style={styles.avatar} source={{ uri: this.state.avatarUrl }} />
+        <FastImage
+          style={styles.avatar}
+          source={{ uri: this.props.avatarUrl }}
+        />
         <View style={styles.userInfo}>
-          <Text style={styles.userName}>{this.state.name}</Text>
+          <Text style={styles.userName}>{this.props.login}</Text>
           <Text style={styles.userJoinDate}>{`加入时间 ${utc2beijing(
-            this.state.joinDate
+            this.props.createdAt
           )}`}</Text>
         </View>
       </View>
     );
   }
 }
-

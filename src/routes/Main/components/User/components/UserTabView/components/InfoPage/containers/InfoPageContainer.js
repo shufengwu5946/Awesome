@@ -9,7 +9,11 @@ import {
 const mapStateToProps = state => ({
   repoListType: state.repoListType,
   repoListSort: state.repoListSort,
-  repoListTypeItems: state.repoListTypeItems
+  repoListTypeItems: state.repoListTypeItems,
+  followersCount: state.followersCount,
+  followingCount: state.followingCount,
+  reposCount: state.reposCount,
+  name: state.name
 });
 
 const mapDispatchToProps = dispatch => ({

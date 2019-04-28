@@ -7,16 +7,21 @@ import { LOGIN_DATA } from "~/constants/AsyncStorage";
 import { EVENTS_URL } from "~/constants/Fetch";
 import { scaleSize } from "~/utils/ScreenUtils";
 import withRefreshList from "~/hocs/withRefreshList";
-import { fetchGet } from "../../../../../../../fetch";
+import { fetchGet } from "~/fetch";
 
 const listItemFunc = ({ item }) => <ActivityListItem item={item} />;
 
-const fetchFunc = aimPage =>
-  retrieveData([LOGIN_DATA]).then(datas => {
-    return fetchGet(EVENTS_URL(JSON.parse(datas[0]).login),{}, {
-      page: aimPage
-    });
-  });
-
-const ActivityPage = withRefreshList(listItemFunc, fetchFunc);
-export default ActivityPage;
+export default function ActivityPage(props) {
+  const fetchFunc = aimPage =>
+    fetchGet(
+      EVENTS_URL(props.login),
+      {
+        Authorization: `token ${props.token}`
+      },
+      {
+        page: aimPage
+      }
+    );
+  const ActivityPage = withRefreshList(listItemFunc, fetchFunc);
+  return <ActivityPage />;
+}

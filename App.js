@@ -9,7 +9,7 @@
 import React, { Component } from "react";
 import AppContainer from "./src/routes/containers/AppContainer";
 import { connect } from "react-redux";
-import { setScreenHeight as setScreenH } from "./src/actions/Auth";
+import { setScreenHeight as setScreenH } from "./src/actions/Login";
 import NavigationService from "./src/routes/containers/NavigationService";
 
 class App extends Component {

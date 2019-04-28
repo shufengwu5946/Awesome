@@ -2,10 +2,10 @@ import {
   setUserName as setUser,
   setPassword as setPass,
   login
-} from "~/actions/Auth";
+} from "~/actions/Login";
 import { connect } from "react-redux";
 import Login from "../components/Login";
-import { authorizations } from "../../../actions/Auth";
+import { authorizations } from "../../../actions/Login";
 
 const mapStateToProps = state => ({
   userName: state.userName,
@@ -22,7 +22,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(setPass(password));
   },
   handlePress: () => {
-    dispatch(login());
+    dispatch(authorizations());
   }
 });
 

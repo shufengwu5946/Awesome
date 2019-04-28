@@ -160,7 +160,7 @@ export default function withRefreshList(listItemFunc, fetchFunc) {
         })
         .catch(error => {
           this.setState({ refreshing: false, loadMoreFinish: false });
-          console.log(error);
+          console.error(error);
         });
     }
   };

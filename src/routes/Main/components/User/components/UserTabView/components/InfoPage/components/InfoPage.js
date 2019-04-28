@@ -11,40 +11,15 @@ import {
 import { scaleSize } from "~/utils/ScreenUtils";
 import styles from "./InfoPageStyles";
 import CardView from "~/components/RNCardView.android";
-import { retrieveData } from "~/utils/AsyncStorageUtils";
-import { LOGIN_DATA } from "~/constants/AsyncStorage";
 import NavigationService from "~/routes/containers/NavigationService";
-import RepoListPage from "~/components/RepoListPage/components/RepoListPage";
 import { myTypeArray } from "~/constants/User/Info/Repo";
 
 export default class InfoPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      name: "",
-      followers: 0,
-      following: 0,
-      public_repos: 0,
-      public_gists: 0
-    };
   }
 
   componentDidMount() {
-    retrieveData([LOGIN_DATA])
-      .then(datas => {
-        if (datas[0]) {
-          this.setState({
-            name: JSON.parse(datas[0]).name,
-            followers: JSON.parse(datas[0]).followers,
-            following: JSON.parse(datas[0]).following,
-            public_repos: JSON.parse(datas[0]).public_repos,
-            public_gists: JSON.parse(datas[0]).public_gists
-          });
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
   }
 
   _onPress(itemText) {
@@ -79,20 +54,20 @@ export default class InfoPage extends Component {
           cardElevation={scaleSize(5)}
         >
           <View style={styles.container}>
-            <Text style={styles.name}>{this.state.name}</Text>
+            <Text style={styles.name}>{this.props.name}</Text>
             <View style={styles.list}>
               <ListItem
-                itemCount={this.state.followers}
+                itemCount={this.props.followersCount}
                 itemText={"跟随者"}
                 _onPress={this._onPress.bind(this, "跟随者")}
               />
               <ListItem
-                itemCount={this.state.following}
+                itemCount={this.props.followingCount}
                 itemText={"跟随"}
                 _onPress={this._onPress.bind(this, "跟随")}
               />
               <ListItem
-                itemCount={this.state.public_repos}
+                itemCount={this.props.reposCount}
                 itemText={"版本库"}
                 _onPress={this._onPress.bind(this, "版本库")}
               />

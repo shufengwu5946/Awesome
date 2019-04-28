@@ -13,6 +13,8 @@ export default class StartPage extends React.Component {
     retrieveData([LOGIN_DATA])
       .then(datas => {
         if (datas[0]) {
+          this.props.setToken(JSON.parse(datas[0]).token);
+          this.props.setLogin(JSON.parse(datas[0]).login);
           this.props.navigation.navigate("Main");
         } else {
           this.props.navigation.navigate("Login");

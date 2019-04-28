@@ -7,7 +7,7 @@ import toast from "~/utils/ToastUtils";
 import { scaleSize } from "~/utils/ScreenUtils";
 import { retrieveData } from "~/utils/AsyncStorageUtils";
 import withRefreshList from "~/hocs/withRefreshList";
-import { fetchGet } from "../../../../../../../fetch";
+import { fetchGet } from "../../../../../../../../../fetch";
 
 const listItemFunc = ({ item }) => (
   <RepoListItem
@@ -22,20 +22,17 @@ const listItemFunc = ({ item }) => (
   />
 );
 
-const fetchFunc = aimPage =>
-  retrieveData([LOGIN_DATA, PASSWORD]).then(datas => {
-    return fetchGet(
+export default function StarPage(props) {
+  const fetchFunc = aimPage =>
+    fetchGet(
       STARRED_URL,
       {
-        Authorization: `Basic ${Base64.encode(
-          `${JSON.parse(datas[0]).login}:${datas[1]}`
-        )}`
+        Authorization: `token ${props.token}`
       },
       {
         page: aimPage
       }
     );
-  });
-
-const StarPage = withRefreshList(listItemFunc, fetchFunc);
-export default StarPage;
+  const StarPage = withRefreshList(listItemFunc, fetchFunc);
+  return <StarPage />;
+}
