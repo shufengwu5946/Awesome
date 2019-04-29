@@ -11,3 +11,5 @@ export const FOLLOWERS_URL = author =>
 export const AUTHORIZATIONS_URL = "https://api.github.com/authorizations";
 export const USER_URL = "https://api.github.com/user";
 export const USERS_USER_URL = login => `https://api.github.com/users/${login}`;
+export const CONTENTS_URL = (owner, repo, path) =>
+  `https://api.github.com/repos/{owner}/{repo}/contents/{path}`;
