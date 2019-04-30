@@ -3,7 +3,10 @@ import { View, ScrollView, Text } from "react-native";
 import styles from "./FileExplorerStyles";
 import Icon from "react-native-vector-icons/AntDesign";
 import { CONTENTS_URL } from "../../../constants/Fetch";
-import withRefreshList from "~/hocs/withRefreshList"
+import withRefreshList from "~/hocs/withRefreshList";
+import withRefreshListWithoutLoadMore from "../../../hocs/withRefreshListWithoutLoadMore";
+import { fetchGet } from "~/fetch";
+import { scaleSize } from "../../../utils/ScreenUtils";
 
 const FileListItem = props => (
   <View>
@@ -21,15 +24,9 @@ const listItemFunc = ({ item }) => (
 );
 
 function FileList(props) {
-  const fetchFunc = aimPage =>
-    fetchGet(
-      CONTENTS_URL(props.owner, props.repo, props.path),
-      {},
-      {
-        page: aimPage
-      }
-    );
-  const FileList = withRefreshList(listItemFunc, fetchFunc);
+  const fetchFunc = () =>
+    fetchGet(CONTENTS_URL(props.owner, props.repo, props.path), {}, {});
+  const FileList = withRefreshListWithoutLoadMore(listItemFunc, fetchFunc);
   return <FileList />;
 }
 
@@ -46,7 +43,11 @@ class FileExplorer extends Component {
           {this.state.path.split("/").map((value, index) => (
             <PathItem pathName={value === "" ? "." : value} key={index} />
           ))}
-          <FileList owner={this.props.owner} repo={this.props.repo} path={this.props.path} />
+          <FileList
+            owner={this.props.owner}
+            repo={this.props.repo}
+            path={this.state.path}
+          />
         </ScrollView>
       </View>
     );

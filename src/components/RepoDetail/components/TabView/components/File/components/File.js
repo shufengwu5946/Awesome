@@ -12,7 +12,7 @@ export default class File extends Component {
   render() {
     return (
       <View>
-        <FileExplorer />
+        <FileExplorer owner={this.props.author} repo ={this.props.title}/>
       </View>
     );
   }
