@@ -1,27 +1,21 @@
 import React, { Component } from "react";
-import {
-  View,
-  Text,
-  ScrollView,
-  WebView
-} from "react-native";
+import { View, Text, ScrollView, WebView, Alert } from "react-native";
 import { README_URL } from "~/constants/Fetch";
 import { fetchGet } from "~/fetch";
 import styles from "./InfoStyles";
 
 export default class Info extends Component {
-  
-
   constructor(props) {
     super(props);
     // const routes = [{ key: "info", title: "信息" }];
-    
+
     this.state = {
       readme: ""
     };
   }
 
   componentDidMount() {
+    // Alert.alert("hehe");
     fetchGet(
       README_URL(this.props.title, this.props.author),
       { Accept: "application/vnd.github.VERSION.html" },
@@ -39,18 +33,16 @@ export default class Info extends Component {
   }
   render() {
     return (
-    <ScrollView style={styles.container}>
-      <View style={styles.border}>
-        <Text style={styles.title} ellipsizeMode="tail" numberOfLines={1}>
-          {this.props.title}
-        </Text>
-        <Text style={styles.description}>{this.props.description}</Text>
-      </View>
-      <Readme readme={this.state.readme} />
-    </ScrollView>
-      
+      <ScrollView style={styles.container}>
+        <View style={styles.border}>
+          <Text style={styles.title} ellipsizeMode="tail" numberOfLines={1}>
+            {this.props.title}
+          </Text>
+          <Text style={styles.description}>{this.props.description}</Text>
+        </View>
+        <Readme readme={this.state.readme} />
+      </ScrollView>
     );
-
   }
 }
 

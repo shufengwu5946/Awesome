@@ -29,7 +29,8 @@ class ListEmpty extends Component {
 
 export default function withRefreshListWithoutLoadMore(
   listItemFunc,
-  fetchFunc
+  fetchFunc,
+  arrangeData
 ) {
   return class extends React.Component {
     constructor(props) {
@@ -60,12 +61,19 @@ export default function withRefreshListWithoutLoadMore(
       });
     }
 
+    arrange(data) {
+      if (arrangeData) {
+        return arrangeData(data);
+      }
+      return data;
+    }
+
     render() {
       return (
         <View>
           <FlatList
             showsVerticalScrollIndicator={false}
-            data={this.state.data}
+            data={this.arrange(this.state.data)}
             renderItem={listItemFunc}
             onRefresh={() => this.handleRefresh()}
             refreshing={this.state.refreshing}

@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { View, ScrollView, Text } from "react-native";
+import React, { Component, PureComponent } from "react";
+import { View, ScrollView, Text, TouchableNativeFeedback } from "react-native";
 import styles from "./FileExplorerStyles";
 import Icon from "react-native-vector-icons/AntDesign";
 import { CONTENTS_URL } from "../../../constants/Fetch";
@@ -8,48 +8,88 @@ import withRefreshListWithoutLoadMore from "../../../hocs/withRefreshListWithout
 import { fetchGet } from "~/fetch";
 import { scaleSize } from "../../../utils/ScreenUtils";
 
+const PressContext = React.createContext({
+  path: "",
+  handlePress: () => {}
+});
+
 const FileListItem = props => (
-  <View>
-    <Icon
-      name={props.fileType === "file" ? "file" : "folder"}
-      size={scaleSize(24)}
-      color={"gray"}
-    />
-    <Text>{`${props.fileName}`}</Text>
-  </View>
+  <TouchableNativeFeedback>
+    <View style={styles.fileListItem}>
+      <Icon
+        style={styles.fileListItemIcon}
+        name={props.fileType === "file" ? "filetext1" : "folder1"}
+        size={scaleSize(44)}
+        color={"green"}
+      />
+      <Text style={styles.fileListItemText}>{`${props.fileName}`}</Text>
+    </View>
+  </TouchableNativeFeedback>
 );
 
 const listItemFunc = ({ item }) => (
   <FileListItem fileType={item.type} fileName={item.name} />
 );
 
+const arrangeData = data => {
+  let resFile = [];
+  let resFolder = [];
+  for (let i = 0; i < data.length; i++) {
+    if (data[i].type === "file") {
+      resFile.push(data[i]);
+    } else {
+      resFolder.push(data[i]);
+    }
+  }
+  return resFolder.concat(resFile);
+};
+
 function FileList(props) {
   const fetchFunc = () =>
     fetchGet(CONTENTS_URL(props.owner, props.repo, props.path), {}, {});
-  const FileList = withRefreshListWithoutLoadMore(listItemFunc, fetchFunc);
+  const FileList = withRefreshListWithoutLoadMore(
+    listItemFunc,
+    fetchFunc,
+    arrangeData
+  );
   return <FileList />;
 }
 
-class FileExplorer extends Component {
+class FileExplorer extends PureComponent {
   constructor(props) {
     super(props);
-    this.state = { path: "" };
+    this.handlePress = path => {
+      this.setState(state => ({
+        path: state.path + "/" + path
+      }));
+    };
+    this.state = { path: "", handlePress: this.handlePress };
   }
 
   render() {
     return (
-      <View>
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          {this.state.path.split("/").map((value, index) => (
-            <PathItem pathName={value === "" ? "." : value} key={index} />
-          ))}
-          <FileList
-            owner={this.props.owner}
-            repo={this.props.repo}
-            path={this.state.path}
-          />
-        </ScrollView>
-      </View>
+      <PressContext.Provider value={this.state}>
+        <View style={styles.explorer}>
+          <View style={styles.path}>
+            <ScrollView
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+            >
+              {this.state.path.split("/").map((value, index) => (
+                <PathItem pathName={value === "" ? "." : value} key={index} />
+              ))}
+            </ScrollView>
+            <View style={styles.pathUnderLine} />
+          </View>
+          <View style={styles.fileList}>
+            <FileList
+              owner={this.props.owner}
+              repo={this.props.repo}
+              path={this.state.path}
+            />
+          </View>
+        </View>
+      </PressContext.Provider>
     );
   }
 }
