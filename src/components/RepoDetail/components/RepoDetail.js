@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { View, TouchableNativeFeedback } from "react-native";
+import { View, TouchableNativeFeedback,Text } from "react-native";
 import styles from "./RepoDetailStyles";
 import Info from "./TabView/components/Info";
 import TabView from "./TabView/components/TabView";
 import Icon from "react-native-vector-icons/AntDesign";
 import { scaleSize } from "~/utils/ScreenUtils";
+import ModalMenu from "../../ModalMenu";
 
 export default class RepoDetail extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -46,7 +47,7 @@ export default class RepoDetail extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { page: 0 };
+    this.state = { page: 0, modalMenuVisible: false };
   }
 
   handleChange(index, e) {
@@ -62,8 +63,11 @@ export default class RepoDetail extends Component {
     const description = navigation.getParam("description", "");
     return (
       <View style={styles.container}>
-        <View/>
-        <TabView title={title} author={author} description={description}/>
+        <View />
+        <TabView title={title} author={author} description={description} />
+        {/* <ModalMenu visible={true}>
+          <Text>hehe</Text>
+        </ModalMenu> */}
       </View>
     );
   }
