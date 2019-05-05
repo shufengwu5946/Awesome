@@ -1,5 +1,11 @@
 import React, { Component, PureComponent } from "react";
-import { View, ScrollView, Text, TouchableNativeFeedback } from "react-native";
+import {
+  View,
+  ScrollView,
+  Text,
+  TouchableNativeFeedback,
+  Alert
+} from "react-native";
 import styles from "./FileExplorerStyles";
 import Icon from "react-native-vector-icons/AntDesign";
 import { CONTENTS_URL } from "../../../constants/Fetch";
@@ -13,19 +19,34 @@ const PressContext = React.createContext({
   handlePress: () => {}
 });
 
-const FileListItem = props => (
-  <TouchableNativeFeedback>
-    <View style={styles.fileListItem}>
-      <Icon
-        style={styles.fileListItemIcon}
-        name={props.fileType === "file" ? "filetext1" : "folder1"}
-        size={scaleSize(44)}
-        color={"green"}
-      />
-      <Text style={styles.fileListItemText}>{`${props.fileName}`}</Text>
-    </View>
-  </TouchableNativeFeedback>
-);
+class FileListItem extends Component {
+  render() {
+    const contextState = this.context;
+    return (
+      <TouchableNativeFeedback
+        onPress={() =>
+          this.props.fileType === "file"
+            ? Alert.alert("不是文件夹")
+            : contextState.handlePress(this.props.fileName)
+        }
+      >
+        <View style={styles.fileListItem}>
+          <Icon
+            style={styles.fileListItemIcon}
+            name={this.props.fileType === "file" ? "filetext1" : "folder1"}
+            size={scaleSize(44)}
+            color={"green"}
+          />
+          <Text style={styles.fileListItemText}>{`${
+            this.props.fileName
+          }`}</Text>
+        </View>
+      </TouchableNativeFeedback>
+    );
+  }
+}
+
+FileListItem.contextType = PressContext;
 
 const listItemFunc = ({ item }) => (
   <FileListItem fileType={item.type} fileName={item.name} />
@@ -63,7 +84,19 @@ class FileExplorer extends PureComponent {
         path: state.path + "/" + path
       }));
     };
-    this.state = { path: "", handlePress: this.handlePress };
+    this.handlePathPress = index => {
+      this.setState(state => ({
+        path: state.path
+          .split("/")
+          .slice(0, index + 1)
+          .join("/")
+      }));
+    };
+    this.state = {
+      path: "",
+      handlePress: this.handlePress,
+      handlePathPress: this.handlePathPress
+    };
   }
 
   render() {
@@ -76,7 +109,11 @@ class FileExplorer extends PureComponent {
               showsHorizontalScrollIndicator={false}
             >
               {this.state.path.split("/").map((value, index) => (
-                <PathItem pathName={value === "" ? "." : value} key={index} />
+                <PathItem
+                  pathName={value === "" ? "." : value}
+                  key={index}
+                  index={index}
+                />
               ))}
             </ScrollView>
             <View style={styles.pathUnderLine} />
@@ -94,10 +131,22 @@ class FileExplorer extends PureComponent {
   }
 }
 
-const PathItem = props => (
-  <View>
-    <Text style={styles.pathItem}>{`   ${props.pathName}   >`}</Text>
-  </View>
-);
+class PathItem extends Component {
+  render() {
+    return (
+      <TouchableNativeFeedback
+        onPress={() => this.context.handlePathPress(this.props.index)}
+      >
+        <View>
+          <Text style={styles.pathItem}>{`    ${
+            this.props.pathName
+          }    >`}</Text>
+        </View>
+      </TouchableNativeFeedback>
+    );
+  }
+}
+
+PathItem.contextType = PressContext;
 
 export default FileExplorer;
