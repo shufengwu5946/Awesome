@@ -885,6 +885,11 @@
     eslint-plugin-react-native "3.6.0"
     prettier "1.16.4"
 
+"@react-native-community/react-native-simple-share@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.npm.taobao.org/@react-native-community/react-native-simple-share/download/@react-native-community/react-native-simple-share-1.0.3.tgz#9a4118b21028e287d48b92e4cd8761a82142c457"
+  integrity sha1-mkEYshAo4ofUi5LkzYdhqCFCxFc=
+
 "@react-navigation/core@3.2.0":
   version "3.2.0"
   resolved "http://registry.npm.taobao.org/@react-navigation/core/download/@react-navigation/core-3.2.0.tgz#329dfe54f305ee22ed750d51cb09c5d18562d56f"
@@ -3566,7 +3571,7 @@ inquirer@^6.2.2:
     strip-ansi "^5.0.0"
     through "^2.3.6"
 
-invariant@^2.2.2, invariant@^2.2.4:
+invariant@^2.2.1, invariant@^2.2.2, invariant@^2.2.4:
   version "2.2.4"
   resolved "http://registry.npm.taobao.org/invariant/download/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
   integrity sha1-YQ88ksk1nOHbYW5TgAjSP/NRWOY=
@@ -5784,7 +5789,7 @@ prompts@^2.0.1:
     kleur "^3.0.2"
     sisteransi "^1.0.0"
 
-prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "http://registry.npm.taobao.org/prop-types/download/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha1-UsQedbjIfnK52TYOAga5ncv/psU=
@@ -5893,6 +5898,13 @@ react-lifecycles-compat@^3.0.4:
   resolved "http://registry.npm.taobao.org/react-lifecycles-compat/download/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha1-TxonOv38jzSIqMUWv9p4+HI1I2I=
 
+react-native-android-share@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.npm.taobao.org/react-native-android-share/download/react-native-android-share-0.0.5.tgz#ef5efc77f9e4baf5da4505069bf7eb1d2e858788"
+  integrity sha1-7178d/nkuvXaRQUGm/frHS6Fh4g=
+  dependencies:
+    invariant "^2.2.1"
+
 react-native-collapsible@^1.4.0:
   version "1.4.0"
   resolved "http://registry.npm.taobao.org/react-native-collapsible/download/react-native-collapsible-1.4.0.tgz#ec03cac361178319b77bb9993b73677356dd89d2"
@@ -5928,6 +5940,13 @@ react-native-gesture-handler@^1.1.0:
     hoist-non-react-statics "^2.3.1"
     invariant "^2.2.2"
     prop-types "^15.5.10"
+
+react-native-material-menu@^0.4.2:
+  version "0.4.2"
+  resolved "https://registry.npm.taobao.org/react-native-material-menu/download/react-native-material-menu-0.4.2.tgz#1dc39c1744ef65d5e536badd5e4d6d640b1f43da"
+  integrity sha1-HcOcF0TvZdXlNrrdXk1tZAsfQ9o=
+  dependencies:
+    prop-types "^15.6.0"
 
 react-native-modal-popover@^0.0.12:
   version "0.0.12"
@@ -5966,6 +5985,11 @@ react-native-safe-area-view@^0.13.0:
   version "1.0.0-alpha.22"
   resolved "http://registry.npm.taobao.org/react-native-screens/download/react-native-screens-1.0.0-alpha.22.tgz#7a120377b52aa9bbb94d0b8541a014026be9289b"
   integrity sha1-ehIDd7Uqqbu5TQuFQaAUAmvpKJs=
+
+react-native-send-intent@^1.0.30:
+  version "1.0.30"
+  resolved "https://registry.npm.taobao.org/react-native-send-intent/download/react-native-send-intent-1.0.30.tgz#cbefcbc562f4df57f28d6ddebd76b0005b9c69b2"
+  integrity sha1-y+/LxWL031fyjW3evXawAFucabI=
 
 react-native-shadow@^1.2.2:
   version "1.2.2"

@@ -19,6 +19,7 @@ const listItemFunc = ({ item }) => (
     starNumber={item.stargazers_count}
     forkNumber={item.forks_count}
     size={item.size}
+    htmlUrl={item.html_url}
   />
 );
 

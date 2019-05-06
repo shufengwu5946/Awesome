@@ -3,6 +3,7 @@ package com.awesome;
 import android.app.Application;
 
 import com.awesome.cardview.RNCardViewPackage;
+import com.awesome.share.SharePackage;
 import com.facebook.react.ReactApplication;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.dylanvann.fastimage.FastImageViewPackage;
@@ -38,7 +39,8 @@ public class MainApplication extends Application implements ReactApplication {
                     new VectorIconsPackage(),
                     new AsyncStoragePackage(),
                     new RNGestureHandlerPackage(),
-                    new RNCardViewPackage()
+                    new RNCardViewPackage(),
+                    new SharePackage()
             );
         }
 

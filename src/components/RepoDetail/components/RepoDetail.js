@@ -1,11 +1,13 @@
 import React, { Component } from "react";
-import { View, TouchableNativeFeedback,Text } from "react-native";
+import { View, TouchableNativeFeedback, Text } from "react-native";
 import styles from "./RepoDetailStyles";
 import Info from "./TabView/components/Info";
 import TabView from "./TabView/components/TabView";
 import Icon from "react-native-vector-icons/AntDesign";
 import { scaleSize } from "~/utils/ScreenUtils";
 import ModalMenu from "../../ModalMenu";
+import Menu, { MenuItem, MenuDivider } from "react-native-material-menu";
+import ShareAndroid from '~/components/ShareAndroid';
 
 export default class RepoDetail extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -16,7 +18,7 @@ export default class RepoDetail extends Component {
           : navigation.getParam("title", ""),
       headerRight: (
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <TouchableNativeFeedback>
+          <TouchableNativeFeedback onPress={() => alert("此功能待开发！")}>
             <Icon
               name="star"
               size={scaleSize(40)}
@@ -24,7 +26,7 @@ export default class RepoDetail extends Component {
               style={{ marginLeft: scaleSize(25), marginRight: scaleSize(25) }}
             />
           </TouchableNativeFeedback>
-          <TouchableNativeFeedback>
+          <TouchableNativeFeedback onPress={() => alert("此功能待开发！")}>
             <Icon
               name="fork"
               size={scaleSize(40)}
@@ -32,7 +34,7 @@ export default class RepoDetail extends Component {
               style={{ marginLeft: scaleSize(25), marginRight: scaleSize(25) }}
             />
           </TouchableNativeFeedback>
-          <TouchableNativeFeedback>
+          <TouchableNativeFeedback onPress={navigation.getParam("showMenu")}>
             <Icon
               name="menu-fold"
               size={scaleSize(40)}
@@ -45,9 +47,27 @@ export default class RepoDetail extends Component {
     };
   };
 
+  _menu = null;
+
+  setMenuRef = ref => {
+    this._menu = ref;
+  };
+
+  hideMenu = () => {
+    this._menu.hide();
+  };
+
+  showMenu = () => {
+    this._menu.show();
+  };
+
   constructor(props) {
     super(props);
     this.state = { page: 0, modalMenuVisible: false };
+  }
+
+  componentDidMount() {
+    this.props.navigation.setParams({ showMenu: this.showMenu });
   }
 
   handleChange(index, e) {
@@ -61,13 +81,85 @@ export default class RepoDetail extends Component {
     const title = navigation.getParam("title", "");
     const author = navigation.getParam("author", "");
     const description = navigation.getParam("description", "");
+    const htmlUrl = navigation.getParam("htmlUrl","");
     return (
       <View style={styles.container}>
         <View />
         <TabView title={title} author={author} description={description} />
-        {/* <ModalMenu visible={true}>
-          <Text>hehe</Text>
-        </ModalMenu> */}
+        <Menu ref={this.setMenuRef} style={styles.menu}>
+          <MenuItem
+            onPress={() => {
+              ShareAndroid.share(htmlUrl);
+              this.hideMenu();
+            }}
+            style={styles.menuItem}
+          >
+            分享
+          </MenuItem>
+          <MenuItem
+            onPress={() => {
+              alert("此功能待开发！");
+              this.hideMenu();
+            }}
+            style={styles.menuItem}
+          >
+            在浏览器中打开
+          </MenuItem>
+          <MenuItem
+            onPress={() => {
+              alert("此功能待开发！");
+              this.hideMenu();
+            }}
+            style={styles.menuItem}
+          >
+            复制克隆链接
+          </MenuItem>
+          <MenuItem
+            onPress={() => {
+              alert("此功能待开发！");
+              this.hideMenu();
+            }}
+            style={styles.menuItem}
+          >
+            关注
+          </MenuItem>
+          <MenuItem
+            onPress={() => {
+              alert("此功能待开发！");
+              this.hideMenu();
+            }}
+            style={styles.menuItem}
+          >
+            创建版本库分支
+          </MenuItem>
+          <MenuItem
+            onPress={() => {
+              alert("此功能待开发！");
+              this.hideMenu();
+            }}
+            style={styles.menuItem}
+          >
+            已发布版本
+          </MenuItem>
+          <MenuItem
+            onPress={() => {
+              alert("此功能待开发！");
+              this.hideMenu();
+            }}
+            style={styles.menuItem}
+          >
+            下载源码(zip)
+          </MenuItem>
+          <MenuItem
+            onPress={() => {
+              alert("此功能待开发！");
+              this.hideMenu();
+            }}
+            style={styles.menuItem}
+          >
+            添加书签
+          </MenuItem>
+        </Menu>
       </View>
     );
   }
