@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, TouchableNativeFeedback, Text } from "react-native";
+import { View, TouchableNativeFeedback, Text, Clipboard } from "react-native";
 import styles from "./RepoDetailStyles";
 import Info from "./TabView/components/Info";
 import TabView from "./TabView/components/TabView";
@@ -8,6 +8,8 @@ import { scaleSize } from "~/utils/ScreenUtils";
 import ModalMenu from "../../ModalMenu";
 import Menu, { MenuItem, MenuDivider } from "react-native-material-menu";
 import ShareAndroid from '~/components/ShareAndroid';
+import BrowserOpenAndroid from '~/components/BrowserOpenAndroid';
+import toast from "~/utils/ToastUtils";
 
 export default class RepoDetail extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -98,7 +100,7 @@ export default class RepoDetail extends Component {
           </MenuItem>
           <MenuItem
             onPress={() => {
-              alert("此功能待开发！");
+              BrowserOpenAndroid.open(htmlUrl);
               this.hideMenu();
             }}
             style={styles.menuItem}
@@ -107,7 +109,8 @@ export default class RepoDetail extends Component {
           </MenuItem>
           <MenuItem
             onPress={() => {
-              alert("此功能待开发！");
+              Clipboard.setString(htmlUrl);
+              toast("复制成功！git");
               this.hideMenu();
             }}
             style={styles.menuItem}

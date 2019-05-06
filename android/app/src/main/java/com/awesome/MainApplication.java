@@ -2,6 +2,7 @@ package com.awesome;
 
 import android.app.Application;
 
+import com.awesome.browserOpen.BrowserOpenPackage;
 import com.awesome.cardview.RNCardViewPackage;
 import com.awesome.share.SharePackage;
 import com.facebook.react.ReactApplication;
@@ -40,7 +41,8 @@ public class MainApplication extends Application implements ReactApplication {
                     new AsyncStoragePackage(),
                     new RNGestureHandlerPackage(),
                     new RNCardViewPackage(),
-                    new SharePackage()
+                    new SharePackage(),
+                    new BrowserOpenPackage()
             );
         }
 
