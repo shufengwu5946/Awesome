@@ -8,6 +8,9 @@ const styles = StyleSheet.create({
   },
   content: {
     fontSize: scaleSize(34)
+  },
+  item: {
+    width: scaleSize(240)
   }
 });
 

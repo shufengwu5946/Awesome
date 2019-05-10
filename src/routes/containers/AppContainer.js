@@ -28,10 +28,19 @@ const UserStack = createStackNavigator(
   }
 );
 
+const TrendsStack= createStackNavigator(
+  {
+    Trends: Trends
+  },
+  {
+    initialRouteName: "Trends"
+  }
+);
+
 const MainStack = createBottomTabNavigator(
   {
-    Trends: {
-      screen: Trends,
+    TrendsStack: {
+      screen: TrendsStack,
       navigationOptions: {
         tabBarLabel: "动态"
       }
@@ -51,7 +60,7 @@ const MainStack = createBottomTabNavigator(
         let iconName;
         if (routeName === "UserStack") {
           iconName = "user";
-        } else if (routeName === "Trends") {
+        } else if (routeName === "TrendsStack") {
           iconName = "home";
         }
         return (
