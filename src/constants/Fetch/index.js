@@ -13,3 +13,5 @@ export const USER_URL = "https://api.github.com/user";
 export const USERS_USER_URL = login => `https://api.github.com/users/${login}`;
 export const CONTENTS_URL = (owner, repo, path) =>
   `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+export const STAR_URL = (owner, repo) =>
+  `https://api.github.com/user/starred/${owner}/${repo}`;

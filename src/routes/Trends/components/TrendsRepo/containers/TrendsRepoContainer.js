@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import RepoListPage from "../components/RepoListPage";
+import TrendsRepo from "../components/TrendsRepo";
 
 const mapStateToProps = state => ({});
 
@@ -8,4 +8,4 @@ const mapDispatchToProps = dispatch => ({});
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(RepoListPage);
+)(TrendsRepo);

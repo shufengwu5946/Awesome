@@ -4,25 +4,31 @@ import styles from "./RepoDetailStyles";
 import Info from "./TabView/components/Info";
 import TabView from "./TabView/components/TabView";
 import Icon from "react-native-vector-icons/AntDesign";
+import MaterialCommunityIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { scaleSize } from "~/utils/ScreenUtils";
 import ModalMenu from "../../ModalMenu";
 import Menu, { MenuItem, MenuDivider } from "react-native-material-menu";
-import ShareAndroid from '~/components/ShareAndroid';
-import BrowserOpenAndroid from '~/components/BrowserOpenAndroid';
+import ShareAndroid from "~/components/ShareAndroid";
+import BrowserOpenAndroid from "~/components/BrowserOpenAndroid";
 import toast from "~/utils/ToastUtils";
+import { fetchGet, fetchPut, fetchDelete } from "../../../fetch";
+import { STAR_URL } from "../../../constants/Fetch";
 
 export default class RepoDetail extends Component {
   static navigationOptions = ({ navigation }) => {
+    const title = navigation.getParam("title", "");
+    const showMenu = navigation.getParam("showMenu");
+    const star = navigation.getParam("star",false);
+    const starRepo = navigation.getParam("starRepo");
+    const unstarRepo = navigation.getParam("unstarRepo");
+
     return {
-      title:
-        navigation.getParam("title", "").length > 14
-          ? navigation.getParam("title", "").substring(0, 14) + "..."
-          : navigation.getParam("title", ""),
+      title: title.length > 14 ? title.substring(0, 14) + "..." : title,
       headerRight: (
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <TouchableNativeFeedback onPress={() => alert("此功能待开发！")}>
-            <Icon
-              name="star"
+          <TouchableNativeFeedback onPress={star ? unstarRepo : starRepo}>
+            <MaterialCommunityIcon
+              name={star ? "star" : "star-outline"}
               size={scaleSize(40)}
               color="green"
               style={{ marginLeft: scaleSize(25), marginRight: scaleSize(25) }}
@@ -36,7 +42,7 @@ export default class RepoDetail extends Component {
               style={{ marginLeft: scaleSize(25), marginRight: scaleSize(25) }}
             />
           </TouchableNativeFeedback>
-          <TouchableNativeFeedback onPress={navigation.getParam("showMenu")}>
+          <TouchableNativeFeedback onPress={showMenu}>
             <Icon
               name="menu-fold"
               size={scaleSize(40)}
@@ -63,13 +69,92 @@ export default class RepoDetail extends Component {
     this._menu.show();
   };
 
+  starRepo = () => {
+    // this.setState({ star: true });
+    this.props.navigation.setParams({
+      star: true
+    });
+    fetchPut(
+      STAR_URL(
+        this.props.navigation.getParam("author", ""),
+        this.props.navigation.getParam("title", "")
+      ),
+      {
+        Authorization: `token ${this.props.token}`,
+      },
+      {}
+    )
+      .then(data => {
+        
+        toast("星标成功！");
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  unstarRepo = () => {
+    // this.setState({ star: false });
+    this.props.navigation.setParams({
+      star: false
+    });
+    fetchDelete(
+      STAR_URL(
+        this.props.navigation.getParam("author", ""),
+        this.props.navigation.getParam("title", "")
+      ),
+      {
+        Authorization: `token ${this.props.token}`
+      },
+      {}
+    )
+      .then(data => {
+        toast("取消星标成功！");
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
+  getRepoStar = () =>{
+    fetchGet(
+      STAR_URL(
+        this.props.navigation.getParam("author", ""),
+        this.props.navigation.getParam("title", "")
+      ),
+      {
+        Authorization: `token ${this.props.token}`
+      },
+      {}
+    )
+      .then(data => {
+        this.props.navigation.setParams({
+          star: true
+        });
+      })
+      .catch(error => {
+        this.props.navigation.setParams({
+          star: false
+        });
+        console.error(error);
+      });
+  };
+
   constructor(props) {
     super(props);
-    this.state = { page: 0, modalMenuVisible: false };
+    this.state = {
+      page: 0,
+      modalMenuVisible: false
+    };
   }
 
   componentDidMount() {
-    this.props.navigation.setParams({ showMenu: this.showMenu });
+    this.props.navigation.setParams({
+      showMenu: this.showMenu,
+      starRepo: this.starRepo,
+      unstarRepo: this.unstarRepo
+    });
+    this.getRepoStar();
   }
 
   handleChange(index, e) {
@@ -83,7 +168,7 @@ export default class RepoDetail extends Component {
     const title = navigation.getParam("title", "");
     const author = navigation.getParam("author", "");
     const description = navigation.getParam("description", "");
-    const htmlUrl = navigation.getParam("htmlUrl","");
+    const htmlUrl = navigation.getParam("htmlUrl", "");
     return (
       <View style={styles.container}>
         <View />
@@ -110,7 +195,7 @@ export default class RepoDetail extends Component {
           <MenuItem
             onPress={() => {
               Clipboard.setString(htmlUrl);
-              toast("复制成功！git");
+              toast("复制成功！");
               this.hideMenu();
             }}
             style={styles.menuItem}

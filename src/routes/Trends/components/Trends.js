@@ -1,8 +1,19 @@
 import React from "react";
-import { Text, View, StatusBar, FlatList } from "react-native";
+import {
+  Text,
+  View,
+  StatusBar,
+  FlatList,
+  TouchableOpacity
+} from "react-native";
 import styles from "./TrendsStyles";
-import Icon from "react-native-vector-icons/AntDesign";
+import AntDesignIcon from "react-native-vector-icons/AntDesign";
+import IoniconsIcon from "react-native-vector-icons/Ionicons";
+import MaterialCommunityIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { scaleSize } from "../../../utils/ScreenUtils";
+import CardView from "~/components/RNCardView.android";
+import NavigationService from "~/routes/containers/NavigationService";
+
 export default class Trends extends React.Component {
   static navigationOptions = {
     title: "动态"
@@ -24,28 +35,46 @@ export default class Trends extends React.Component {
 const TrendsList = props => (
   <FlatList
     data={[
-      { name: "搜索", iconName: "menu-fold" },
-      { name: "足迹", iconName: "menu-fold" },
-      { name: "趋势版本库", iconName: "menu-fold" },
-      { name: "版本库集合", iconName: "menu-fold" },
-      { name: "精选主题", iconName: "menu-fold" },
-      { name: "全球动态", iconName: "menu-fold" }
+      { name: "搜索", iconName: "cloud-search", page: "" },
+      { name: "足迹", iconName: "road-variant", page: "" },
+      { name: "趋势版本库", iconName: "finance", page: "TrendsRepo" },
+      { name: "版本库集合", iconName: "inbox-multiple", page: "" },
+      { name: "精选主题", iconName: "theme-light-dark", page: "" },
+      { name: "全球动态", iconName: "earth", page: "" }
     ]}
     renderItem={({ item }) => (
-      <TrendsListItem iconName={item.iconName}>{item.name}</TrendsListItem>
+      <TrendsListItem iconName={item.iconName} page={item.page}>
+        {item.name}
+      </TrendsListItem>
     )}
     numColumns={3}
+    keyExtractor={(item, index) => index}
   />
 );
 
 const TrendsListItem = props => (
-  <View style={styles.item}>
-    <Icon
-      name={props.iconName}
-      size={scaleSize(40)}
-      color="green"
-      style={{ marginLeft: scaleSize(25), marginRight: scaleSize(25) }}
-    />
-    <Text>{props.children}</Text>
-  </View>
+  <TouchableOpacity
+    onPress={() => {
+      NavigationService.navigate(props.page);
+    }}
+  >
+    <CardView
+      style={{
+        marginTop: scaleSize(10),
+        marginLeft: scaleSize(10),
+        marginRight: scaleSize(10),
+        marginBottom: scaleSize(10)
+      }}
+      cardElevation={scaleSize(5)}
+    >
+      <View style={styles.item}>
+        <MaterialCommunityIcon
+          name={props.iconName}
+          size={scaleSize(120)}
+          color="green"
+        />
+        <Text style={styles.itemText}>{props.children}</Text>
+      </View>
+    </CardView>
+  </TouchableOpacity>
 );

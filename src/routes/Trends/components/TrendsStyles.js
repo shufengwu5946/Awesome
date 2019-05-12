@@ -10,7 +10,18 @@ const styles = StyleSheet.create({
     fontSize: scaleSize(34)
   },
   item: {
-    width: scaleSize(240)
+    width: scaleSize(220),
+    flexDirection: "column",
+    alignItems: "center",
+    borderColor: "transparent",
+    borderWidth: scaleSize(1),
+    paddingTop: scaleSize(20)
+  },
+  itemText: {
+    fontSize: scaleSize(26),
+    color: "gray",
+    marginTop: scaleSize(10),
+    marginBottom: scaleSize(20)
   }
 });
 

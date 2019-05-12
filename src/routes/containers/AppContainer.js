@@ -18,6 +18,7 @@ import FollowerListPage from "../../components/FollowerListPage/components/Follo
 import RepoListMenuList from "../../components/RepoListPage/components/RepoListMenuList";
 import { View, TouchableOpacity, Alert } from "react-native";
 import { HeaderBackButton } from "react-navigation";
+import TrendsRepo from "../Trends/components/TrendsRepo/components/TrendsRepo";
 
 const UserStack = createStackNavigator(
   {
@@ -28,7 +29,7 @@ const UserStack = createStackNavigator(
   }
 );
 
-const TrendsStack= createStackNavigator(
+const TrendsStack = createStackNavigator(
   {
     Trends: Trends
   },
@@ -116,9 +117,7 @@ const RepoListPageDrawer = createDrawerNavigator(
     drawerWidth: scaleSize(500),
     drawerPosition: "right",
     useNativeAnimations: false,
-    contentComponent: () => (
-      <RepoListMenuList/>
-    ),
+    contentComponent: () => <RepoListMenuList />,
     navigationOptions: ({ navigation }) => ({
       title: "版本库",
       headerRight: (
@@ -148,7 +147,8 @@ const StartStatck = createStackNavigator(
     LoginSwitch: LoginSwitch,
     RepoListPage: RepoListPageDrawer,
     FollowerListPage: FollowerListPage,
-    RepoDetail: RepoDetail
+    RepoDetail: RepoDetail,
+    TrendsRepo: TrendsRepo
   },
   {
     navigationOptions: {
