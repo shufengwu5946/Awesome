@@ -21,7 +21,8 @@ export default class RepoListItem extends Component {
       forkNumber,
       author,
       size,
-      htmlUrl
+      htmlUrl,
+      defaultBranch
     } = this.props;
     return (
       <CardView
@@ -40,7 +41,8 @@ export default class RepoListItem extends Component {
               author: author,
               size: size,
               description: description,
-              htmlUrl:htmlUrl
+              htmlUrl:htmlUrl,
+              defaultBranch:defaultBranch
             });
           }}
         >

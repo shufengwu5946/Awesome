@@ -71,6 +71,7 @@ export default function withRefreshList(listItemFunc, fetchFunc) {
     }
 
     handleRefresh() {
+      console.log("handleRefresh");
       this.setState(
         { page: 1, refreshing: true, loadMoreFinish: false },
         () => {
@@ -136,6 +137,7 @@ export default function withRefreshList(listItemFunc, fetchFunc) {
       fetchFunc(this.state.page)
         .then(data => {
           if (isRefresh) {
+            console.log(data);
             this.setState({
               data: data,
               refreshing: false,

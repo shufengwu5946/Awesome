@@ -21,6 +21,7 @@ const listItemFunc = ({ item }) => (
     starNumber={item.stargazers_count}
     forkNumber={item.forks_count}
     size={item.size}
+    defaultBranch={item.default_branch}
   />
 );
 

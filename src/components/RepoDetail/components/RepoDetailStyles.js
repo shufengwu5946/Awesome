@@ -13,8 +13,29 @@ const styles = StyleSheet.create({
     left: scaleSize(400)
   },
   menuItem: {
-    width:scaleSize(300),
-    height:scaleSize(100)
+    width: scaleSize(300),
+    height: scaleSize(100)
+  },
+  branchModal: {
+    flex: 1,
+    backgroundColor: "white",
+    padding: scaleSize(22),
+    borderRadius: scaleSize(4),
+    borderColor: "rgba(0, 0, 0, 0.1)"
+  },
+  branchModalTitle: {
+    fontSize: scaleSize(30),
+    color: "black",
+    marginTop: scaleSize(10),
+    marginLeft: scaleSize(10),
+    marginBottom: scaleSize(20)
+  },
+  branchModalButton: {
+    fontSize: scaleSize(30),
+    color: "green",
+    backgroundColor: "white",
+    marginTop: scaleSize(20),
+    marginBottom: scaleSize(20)
   }
 });
 

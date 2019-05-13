@@ -24,8 +24,10 @@ const listItemFunc = ({ item }) => (
 );
 
 export default function StarPage(props) {
-  const fetchFunc = aimPage =>
-    fetchGet(
+  const fetchFunc = aimPage => {
+    console.log(props.token);
+
+    return fetchGet(
       STARRED_URL,
       {
         Authorization: `token ${props.token}`
@@ -34,6 +36,7 @@ export default function StarPage(props) {
         page: aimPage
       }
     );
+  };
   const StarPage = withRefreshList(listItemFunc, fetchFunc);
   return <StarPage />;
 }

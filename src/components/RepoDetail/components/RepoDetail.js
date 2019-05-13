@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { View, TouchableNativeFeedback, Text, Clipboard } from "react-native";
+import {
+  View,
+  TouchableNativeFeedback,
+  Text,
+  Clipboard,
+  FlatList
+} from "react-native";
 import styles from "./RepoDetailStyles";
 import Info from "./TabView/components/Info";
 import TabView from "./TabView/components/TabView";
@@ -13,14 +19,17 @@ import BrowserOpenAndroid from "~/components/BrowserOpenAndroid";
 import toast from "~/utils/ToastUtils";
 import { fetchGet, fetchPut, fetchDelete } from "../../../fetch";
 import { STAR_URL } from "../../../constants/Fetch";
+import Modal from "react-native-modal";
+import Button from "react-native-button";
 
 export default class RepoDetail extends Component {
   static navigationOptions = ({ navigation }) => {
     const title = navigation.getParam("title", "");
     const showMenu = navigation.getParam("showMenu");
-    const star = navigation.getParam("star",false);
+    const star = navigation.getParam("star", false);
     const starRepo = navigation.getParam("starRepo");
     const unstarRepo = navigation.getParam("unstarRepo");
+    const showBranchModal = navigation.getParam("showBranchModal");
 
     return {
       title: title.length > 14 ? title.substring(0, 14) + "..." : title,
@@ -34,7 +43,7 @@ export default class RepoDetail extends Component {
               style={{ marginLeft: scaleSize(25), marginRight: scaleSize(25) }}
             />
           </TouchableNativeFeedback>
-          <TouchableNativeFeedback onPress={() => alert("此功能待开发！")}>
+          <TouchableNativeFeedback onPress={showBranchModal}>
             <Icon
               name="fork"
               size={scaleSize(40)}
@@ -69,6 +78,14 @@ export default class RepoDetail extends Component {
     this._menu.show();
   };
 
+  showBranchModal = () => {
+    this.setState({ branchModalVisible: true });
+    // if (this.state.branchTagList.length === 0) {
+    // } else {
+    //   this.setState({ branchModalVisible: true });
+    // }
+  };
+
   starRepo = () => {
     // this.setState({ star: true });
     this.props.navigation.setParams({
@@ -80,12 +97,11 @@ export default class RepoDetail extends Component {
         this.props.navigation.getParam("title", "")
       ),
       {
-        Authorization: `token ${this.props.token}`,
+        Authorization: `token ${this.props.token}`
       },
       {}
     )
       .then(data => {
-        
         toast("星标成功！");
       })
       .catch(error => {
@@ -116,7 +132,7 @@ export default class RepoDetail extends Component {
       });
   };
 
-  getRepoStar = () =>{
+  getRepoStar = () => {
     fetchGet(
       STAR_URL(
         this.props.navigation.getParam("author", ""),
@@ -136,7 +152,7 @@ export default class RepoDetail extends Component {
         this.props.navigation.setParams({
           star: false
         });
-        console.error(error);
+        console.log(error);
       });
   };
 
@@ -144,7 +160,10 @@ export default class RepoDetail extends Component {
     super(props);
     this.state = {
       page: 0,
-      modalMenuVisible: false
+      modalMenuVisible: false,
+      branchModalVisible: false,
+      defaultBranch: props.navigation.getParam("defaultBranch", ""),
+      branchTagList: []
     };
   }
 
@@ -152,7 +171,8 @@ export default class RepoDetail extends Component {
     this.props.navigation.setParams({
       showMenu: this.showMenu,
       starRepo: this.starRepo,
-      unstarRepo: this.unstarRepo
+      unstarRepo: this.unstarRepo,
+      showBranchModal: this.showBranchModal
     });
     this.getRepoStar();
   }
@@ -248,6 +268,30 @@ export default class RepoDetail extends Component {
             添加书签
           </MenuItem>
         </Menu>
+        <Modal isVisible={this.state.branchModalVisible}>
+          <View style={styles.branchModal}>
+            <Text style={styles.branchModalTitle}>选择分支或标签</Text>
+            <FlatList
+              data={[
+                { name: "Devin" },
+                { name: "Jackson" },
+                { name: "James" },
+                { name: "Joel" },
+                { name: "John" }
+              ]}
+              renderItem={({ item }) => (
+                <Text style={styles.item}>{item.name}</Text>
+              )}
+              keyExtractor={(item, index) => index}
+            />
+            <Button
+              style={styles.branchModalButton}
+              onPress={() => this.setState({ branchModalVisible: false })}
+            >
+              取消
+            </Button>
+          </View>
+        </Modal>
       </View>
     );
   }
